@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySprite : MonoBehaviour
+public class EnemyObject : MonoBehaviour
 {
     private GameObject enemyObject;
 
@@ -15,11 +15,12 @@ public class EnemySprite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-	private void OnMouseDown()
-	{
+    private void OnMouseDown()
+    {
+        Debug.Log("Enemy clicked!");
         GameObject.Destroy(enemyObject);
-	}
+    }
 }
