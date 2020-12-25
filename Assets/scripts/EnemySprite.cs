@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHandler : MonoBehaviour
+public class EnemyObject: MonoBehaviour
 {
-    GameObject enemySprite;
-    
+    private GameObject enemyObject;
+
     // Start is called before the first frame update
     void Start()
     {
-        enemySprite = GameObject.Find("enemy");
-        Debug.Log("Found enemy");
+        enemyObject = GameObject.Find("enemy");
     }
 
     // Update is called once per frame
@@ -18,4 +17,10 @@ public class GameHandler : MonoBehaviour
     {
         
     }
+
+	private void OnMouseDown()
+	{
+        Debug.Log("Enemy clicked!");
+        GameObject.Destroy(enemyObject);
+	}
 }
