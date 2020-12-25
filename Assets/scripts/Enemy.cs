@@ -1,23 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Enemy : MonoBehaviour
+﻿public class Enemy
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	int currentHealth;
+	int maxHealth;
+	
+	public Enemy(int _maxHealth) {
+		currentHealth = _maxHealth;
+		maxHealth = _maxHealth;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-	private void OnMouseDown()
-	{
-        SendMessageUpwards("DealEnemyDamage");
+	public bool TakeDamage(int _amount) {
+		currentHealth -= _amount;
+		if (currentHealth <= 0)
+			return true;
+		else
+			return false;
 	}
 }

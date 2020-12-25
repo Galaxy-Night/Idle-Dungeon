@@ -5,11 +5,13 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public Enemy currentEnemy;
     
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(enemyPrefab, transform);
+        enemyPrefab = Instantiate(enemyPrefab, transform);
+        currentEnemy = new Enemy(10);
     }
 
     // Update is called once per frame
@@ -18,7 +20,8 @@ public class GameHandler : MonoBehaviour
         
     }
 
-    void DealEnemyDamage() {
-        Debug.Log("Damaged");
+    void DealEnemyDamage(int _amount) {
+        if (currentEnemy.TakeDamage(_amount))
+            Destroy(enemyPrefab);
 	}
 }
