@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHandler : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(enemyPrefab, transform);
+        
     }
 
     // Update is called once per frame
@@ -18,7 +16,8 @@ public class GameHandler : MonoBehaviour
         
     }
 
-    void DealEnemyDamage() {
-        Debug.Log("Damaged");
+	private void OnMouseDown()
+	{
+        SendMessageUpwards("DealEnemyDamage");
 	}
 }
