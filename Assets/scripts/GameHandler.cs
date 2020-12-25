@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-    GameObject enemyObject;
+    EnemyObject enemyObject;
     
     // Start is called before the first frame update
     void Start()
     {
-        enemyObject = GameObject.Find("enemy");
         Debug.Log("Found enemy");
     }
 

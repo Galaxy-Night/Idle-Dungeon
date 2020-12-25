@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class EnemyObject : MonoBehaviour
 {
-    private GameObject enemyObject;
-
+    Enemy enemy;
     // Start is called before the first frame update
     void Start()
     {
-        enemyObject = GameObject.Find("enemy");
+        enemy = new Enemy(10, 1, 10, 10, 0);
     }
 
     // Update is called once per frame
@@ -20,7 +19,6 @@ public class EnemyObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("Enemy clicked!");
-        GameObject.Destroy(enemyObject);
+        Debug.Log(enemy.TakeDamage(1));
     }
 }
