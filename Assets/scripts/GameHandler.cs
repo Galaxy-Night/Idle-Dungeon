@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-    EnemyObject enemyObject;
+    public GameObject enemyPrefab;
     
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Found enemy");
+        Instantiate(enemyPrefab, transform);
     }
 
     // Update is called once per frame
