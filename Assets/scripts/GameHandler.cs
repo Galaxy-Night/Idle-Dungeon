@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// <c>GameHandler</c> is a class to handle the main functionality of the game.
@@ -9,10 +10,12 @@ public class GameHandler : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public Enemy currentEnemy;
+    Image enemyHealthBar;
     
     // Start is called before the first frame update
     void Start()
     {
+        enemyHealthBar = GameObject.Find("enemy_health").GetComponent<Image>();
         enemyPrefab = Instantiate(enemyPrefab, transform);
         currentEnemy = new Enemy(10);
     }
@@ -20,7 +23,7 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -33,5 +36,7 @@ public class GameHandler : MonoBehaviour
     void DealEnemyDamage(int _amount) {
         if (currentEnemy.TakeDamage(_amount))
             Destroy(enemyPrefab);
-	}
+        enemyHealthBar.fillAmount = currentEnemy.currentHealth / (float)currentEnemy.maxHealth;
+        Debug.Log(currentEnemy.currentHealth / currentEnemy.maxHealth);
+    }
 }

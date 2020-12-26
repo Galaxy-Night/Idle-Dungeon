@@ -2,8 +2,8 @@
 /// player to interact with an enemy</summary>
 public class Enemy
 {
-	int currentHealth;
-	int maxHealth;
+	public int currentHealth;
+	public int maxHealth;
 	
 	/// <summary>
 	/// The constructor for Enemy
@@ -23,8 +23,10 @@ public class Enemy
 	/// </returns>
 	public bool TakeDamage(int _amount) {
 		currentHealth -= _amount;
-		if (currentHealth <= 0)
+		if (currentHealth <= 0) {
+			currentHealth = 0;
 			return true;
+		}
 		else
 			return false;
 	}
