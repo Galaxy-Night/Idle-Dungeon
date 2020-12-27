@@ -27,5 +27,6 @@ public class Render : MonoBehaviour
 
     public void NewEnemyDisplay(Enemy _enemy) {
         enemyName.text = _enemy.name;
+        enemyCoin.text = _enemy.coinValue.ToString();
 	}
 }
