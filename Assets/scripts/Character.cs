@@ -2,10 +2,12 @@
 {
 	public int currentHealth;
 	public int maxHealth;
+	public string name;
 
-	public Character(int _maxHealth) {
+	public Character(int _maxHealth, string _name) {
 		currentHealth = _maxHealth;
 		maxHealth = _maxHealth;
+		name = _name;
 	}
 
 	/// <summary>

@@ -6,13 +6,17 @@ using UnityEngine.UI;
 public class Render : MonoBehaviour
 {
     public Image enemyHealthBar;
-    public Text coinDisplay;
+    public Text enemyCoin;
+    public Text enemyName;
+    public Text currentCoins;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyHealthBar = GameObject.Find("enemy_health").GetComponent<Image>();
-        coinDisplay = GameObject.Find("current_coins").GetComponent<Text>();
+        enemyCoin = GameObject.Find("coin_value").GetComponent<Text>();
+        enemyName = GameObject.Find("enemy_name").GetComponent<Text>();
+        currentCoins = GameObject.Find("current_coins").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -21,4 +25,7 @@ public class Render : MonoBehaviour
         
     }
 
+    public void NewEnemyDisplay(Enemy _enemy) {
+        enemyName.text = _enemy.name;
+	}
 }

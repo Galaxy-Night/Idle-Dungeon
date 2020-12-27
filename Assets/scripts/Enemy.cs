@@ -7,7 +7,8 @@ public class Enemy : Character
 	/// The constructor for Enemy
 	/// </summary>
 	/// <param name="_maxHealth">The enemy's maximum health</param>
-	public Enemy(int _maxHealth, int _coinValue) : base(_maxHealth) {
+	public Enemy(int _maxHealth, string _name, int _coinValue) : 
+	base(_maxHealth, _name) {
 		coinValue = _coinValue;
 	}
 }
