@@ -9,18 +9,14 @@ using UnityEngine.UI;
 public class GameHandler : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public Render render;
     public Enemy currentEnemy;
-
-    Image enemyHealthBar;
-    Text healthDisplay;
 
     int currentCoins;
     
     // Start is called before the first frame update
     void Start()
     {
-        enemyHealthBar = GameObject.Find("enemy_health").GetComponent<Image>();
-        healthDisplay = GameObject.Find("current_coins").GetComponent<Text>();
         enemyPrefab = Instantiate(enemyPrefab, transform);
         currentEnemy = new Enemy(10, 10);
         currentCoins = 0;
@@ -43,9 +39,10 @@ public class GameHandler : MonoBehaviour
         if (currentEnemy.TakeDamage(_amount)) {
             Destroy(enemyPrefab);
             currentCoins += currentEnemy.coinValue;
-            healthDisplay.text = currentCoins.ToString();
+            render.coinDisplay.text = currentCoins.ToString();
         }
-        enemyHealthBar.fillAmount = currentEnemy.currentHealth / (float)currentEnemy.maxHealth;
+        render.enemyHealthBar.fillAmount = currentEnemy.currentHealth / 
+            (float)currentEnemy.maxHealth;
         Debug.Log(currentCoins);
     }
 }
