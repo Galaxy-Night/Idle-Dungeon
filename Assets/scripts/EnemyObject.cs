@@ -8,10 +8,15 @@ using UnityEngine;
 
 public class EnemyObject : MonoBehaviour
 {
+    public string enemyName;
+    public int maxHealth;
+    public int currentHealth;
+    public int coinValue;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -23,6 +28,13 @@ public class EnemyObject : MonoBehaviour
     // OnMouseDown is called when the user clicks on the object
     private void OnMouseDown()
     {
-        SendMessageUpwards("DealEnemyDamage", 1);
+        currentHealth--;
+        if (currentHealth <= 0) {
+            Destroy(gameObject);
+		}
     }
+
+    public EnemyObject Clone() {
+        return (EnemyObject)MemberwiseClone();
+	}
 }

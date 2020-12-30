@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,48 +9,40 @@ using UnityEngine.UI;
 /// </summary>
 public class GameHandler : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public GameObject currentEnemyUI;
     public Render render;
-    public Enemy currentEnemy;
+    public GameObject currentEnemy;
+    HashSet<GameObject> validMonsters;
 
     int currentCoins;
+    int currentFloor;
+    int tapDamage;
     
     // Start is called before the first frame update
     void Start()
     {
-        GenerateNewEnemy();
         currentCoins = 0;
+        tapDamage = 1;
+        GenerateFloor(1);
+        GenerateNewEnemy();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    /// <summary>
-    /// <c>DealEnemyDamage</c> is invoked by <c>EnemyObject</c> when the user
-    /// clicks within the enemy's collision box using 
-    /// <c>SendMessageUpwards</c>. <c>DealEnemyDamage</c> is used to ensure the
-    /// game responds properly when an enemy is killed.
-    /// </summary>
-    /// <param name="_amount">The amount of damage the enemy is dealt</param>
-    void DealEnemyDamage(int _amount) {
-        if (currentEnemy.TakeDamage(_amount)) {
-            Destroy(currentEnemyUI);
-            currentCoins += currentEnemy.coinValue;
-            render.currentCoins.text = currentCoins.ToString();
+        if (currentEnemy == null)
             GenerateNewEnemy();
-        }
-        render.enemyHealthBar.fillAmount = currentEnemy.currentHealth / 
-            (float)currentEnemy.maxHealth;
-        Debug.Log(currentCoins);
     }
 
     void GenerateNewEnemy() {
-        currentEnemy = new Enemy(10, "Animated Shrub", 10);
-        currentEnemyUI = Instantiate(enemyPrefab, transform);
-        render.NewEnemyDisplay(currentEnemy);
+        System.Random random = new System.Random();
+        GameObject[] tempArray = new GameObject[validMonsters.Count];
+        validMonsters.CopyTo(tempArray);
+        if (currentEnemy)
+            Destroy(currentEnemy);
+        currentEnemy = Instantiate(tempArray[random.Next(0, validMonsters.Count)]);
     }
+
+    void GenerateFloor(int floor) {
+        validMonsters = MonsterDefinitions.TEMPLoadLevel();
+	}
 }
