@@ -25,8 +25,8 @@ public class Render : MonoBehaviour
         
     }
 
-    public void NewEnemyDisplay(Enemy _enemy) {
-        enemyName.text = _enemy.name;
+    public void NewEnemyDisplay(EnemyObject _enemy) {
+        enemyName.text = _enemy.enemyName;
         enemyCoin.text = _enemy.coinValue.ToString();
 	}
 }

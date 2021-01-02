@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -95,8 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7ee0fcd7d10f040bad4567e1a3ec06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
   enemyName: 
+  maxHealth: 0
+  currentHealth: 0
   coinValue: 0
 --- !u!61 &3189438008030833880
 BoxCollider2D:

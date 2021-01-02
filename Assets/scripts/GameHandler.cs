@@ -42,6 +42,7 @@ public class GameHandler : MonoBehaviour
         currentEnemy = Instantiate(validMonsters[random.Next(0, validMonsters.Length)]);
         currentEnemy.transform.parent = transform;
         enemyData = currentEnemy.GetComponent<EnemyObject>();
+        render.NewEnemyDisplay(enemyData);
     }
 
     void GenerateFloor(int floor) {
