@@ -28,13 +28,6 @@ public class EnemyObject : MonoBehaviour
     // OnMouseDown is called when the user clicks on the object
     private void OnMouseDown()
     {
-        currentHealth--;
-        if (currentHealth <= 0) {
-            Destroy(gameObject);
-		}
+        SendMessageUpwards("DealTapDamage");
     }
-
-    public EnemyObject Clone() {
-        return (EnemyObject)MemberwiseClone();
-	}
 }

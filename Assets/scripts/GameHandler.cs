@@ -11,7 +11,8 @@ public class GameHandler : MonoBehaviour
 {
     public Render render;
     public GameObject currentEnemy;
-    HashSet<GameObject> validMonsters;
+    private EnemyObject enemyData;
+    private GameObject[] validMonsters;
 
     int currentCoins;
     int currentFloor;
@@ -22,7 +23,8 @@ public class GameHandler : MonoBehaviour
     {
         currentCoins = 0;
         tapDamage = 1;
-        GenerateFloor(1);
+        currentFloor = 1;
+        GenerateFloor(currentFloor);
         GenerateNewEnemy();
     }
 
@@ -35,14 +37,22 @@ public class GameHandler : MonoBehaviour
 
     void GenerateNewEnemy() {
         System.Random random = new System.Random();
-        GameObject[] tempArray = new GameObject[validMonsters.Count];
-        validMonsters.CopyTo(tempArray);
         if (currentEnemy)
             Destroy(currentEnemy);
-        currentEnemy = Instantiate(tempArray[random.Next(0, validMonsters.Count)]);
+        currentEnemy = Instantiate(validMonsters[random.Next(0, validMonsters.Length)]);
+        currentEnemy.transform.parent = transform;
+        enemyData = currentEnemy.GetComponent<EnemyObject>();
     }
 
     void GenerateFloor(int floor) {
         validMonsters = MonsterDefinitions.TEMPLoadLevel();
+	}
+
+    void DealTapDamage() {
+        enemyData.currentHealth -= tapDamage;
+        if (enemyData.currentHealth <= 0) {
+            currentCoins += enemyData.coinValue;
+            GenerateNewEnemy();
+		}
 	}
 }

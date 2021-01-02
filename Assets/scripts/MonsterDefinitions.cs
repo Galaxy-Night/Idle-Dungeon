@@ -23,11 +23,14 @@ public static class MonsterDefinitions
 		return returned;
 	}
 
-	public static HashSet<GameObject> TEMPLoadLevel() {
-		HashSet<GameObject> returned = new HashSet<GameObject>();
+	public static GameObject[] TEMPLoadLevel() {
+		GameObject[] returned;
+		HashSet<GameObject> set = new HashSet<GameObject>();
 		Object[] monsters = Resources.LoadAll("lvl0");
 		foreach (object monster in monsters)
-			returned.Add((GameObject)monster);
+			set.Add((GameObject)monster);
+		returned = new GameObject[set.Count];
+		set.CopyTo(returned);
 		return returned;
 	}
 }
