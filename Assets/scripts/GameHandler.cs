@@ -43,6 +43,7 @@ public class GameHandler : MonoBehaviour
         currentEnemy.transform.parent = transform;
         enemyData = currentEnemy.GetComponent<EnemyObject>();
         render.NewEnemyDisplay(enemyData);
+        render.currentCoins.text = currentCoins.ToString();
     }
 
     void GenerateFloor(int floor) {
@@ -55,5 +56,6 @@ public class GameHandler : MonoBehaviour
             currentCoins += enemyData.coinValue;
             GenerateNewEnemy();
 		}
+        render.enemyHealthBar.fillAmount = enemyData.currentHealth / (float)enemyData.maxHealth;
 	}
 }
