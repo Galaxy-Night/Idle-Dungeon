@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary><c>EnemyObject</c> represents the enemy prefab that Unity 
-/// interacts with. It contains the interface for the user to interact with 
-/// enemies</summary>
+/// <summary>
+/// <c>EnemyObject</c> represents the current enemy that the user is 
+/// facing. It contains the information needed to handle the user's interaction
+/// with the enemy.
+/// </summary>
 
 public class EnemyObject : MonoBehaviour
 {

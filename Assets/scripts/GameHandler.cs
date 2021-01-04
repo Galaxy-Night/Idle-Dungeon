@@ -35,6 +35,11 @@ public class GameHandler : MonoBehaviour
             GenerateNewEnemy();
     }
 
+    /// <summary>
+    /// <c>GenerateNewEnemy</c> is called when a new enemy needs to be 
+    /// generated. The function generates the new enemy, and updates
+    /// the information stored in the <c>render</c> object
+    /// </summary>
     void GenerateNewEnemy() {
         System.Random random = new System.Random();
         if (currentEnemy)
@@ -46,10 +51,19 @@ public class GameHandler : MonoBehaviour
         render.currentCoins.text = currentCoins.ToString();
     }
 
+    /// <summary>
+    /// <c>GenerateFloor</c> generates the specifiec floor. It calls the
+    /// function to generate the new list of valid enemies.
+    /// </summary>
+    /// <param name="floor">The level of the floor to be generated</param>
     void GenerateFloor(int floor) {
         validMonsters = MonsterDefinitions.TEMPLoadLevel();
 	}
 
+    /// <summary>
+    /// <c>DealTapDamage</c> deals damage to the current enemy when the user
+    /// taps. It is called in <c>EnemyObject</c>'s <c>OnMouseDown</c> function.
+    /// </summary>
     void DealTapDamage() {
         enemyData.currentHealth -= tapDamage;
         if (enemyData.currentHealth <= 0) {
