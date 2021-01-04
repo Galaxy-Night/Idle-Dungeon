@@ -8,11 +8,11 @@ public static class MonsterDefinitions
 
 	public static HashSet<GameObject> LoadLevel(int level) {
 		HashSet<GameObject> returned = new HashSet<GameObject>();
-		Object[] levelbelow = AssetDatabase.LoadAllAssetsAtPath(FILE_LOCATION +
+		Object[] levelbelow = Resources.LoadAll(FILE_LOCATION + 
 			(level - 1).ToString());
-		Object[] currentlevel = AssetDatabase.LoadAllAssetsAtPath(FILE_LOCATION +
+		Object[] currentlevel = Resources.LoadAll(FILE_LOCATION +
 					level.ToString());
-		Object[] levelabove = AssetDatabase.LoadAllAssetsAtPath(FILE_LOCATION +
+		Object[] levelabove = Resources.LoadAll(FILE_LOCATION +
 			(level + 1).ToString());
 		foreach (object item in levelbelow)
 			returned.Add((GameObject)item);
