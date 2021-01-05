@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// <c>Render</c> contains the render 
+/// </summary>
 public class Render : MonoBehaviour
 {
     public Image enemyHealthBar;
@@ -25,6 +28,13 @@ public class Render : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// <c>NewEnemyDisplay</c> updates the ui elements stored in the 
+    /// <c>Render</c> object to reflect a new enemy that has been 
+    /// generated
+    /// </summary>
+    /// <param name="_enemy">The enemy for which the information is to be
+    /// displayed</param>
     public void NewEnemyDisplay(EnemyObject _enemy) {
         enemyName.text = _enemy.enemyName;
         enemyCoin.text = _enemy.coinValue.ToString();
