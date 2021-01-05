@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     public int coinValue;
+    public int xpValue;
 
     // Start is called before the first frame update
     void Start()

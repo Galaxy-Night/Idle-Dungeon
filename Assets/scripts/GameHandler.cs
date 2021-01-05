@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class GameHandler : MonoBehaviour
 {
+	private readonly int[] NEXT_FLOOR_XP = { 300, 600, 1800, 3600, 7200 };
+
     public Render render;
     public GameObject currentEnemy;
     private Enemy enemyData;
@@ -17,6 +19,7 @@ public class GameHandler : MonoBehaviour
     int currentCoins;
     int currentFloor;
     int tapDamage;
+    int currentXP;
     
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,7 @@ public class GameHandler : MonoBehaviour
         currentCoins = 0;
         tapDamage = 1;
         currentFloor = 1;
+        currentXP = 0;
         GenerateFloor(currentFloor);
         GenerateNewEnemy();
     }
@@ -40,7 +44,7 @@ public class GameHandler : MonoBehaviour
     /// generated. The function generates the new enemy, and updates
     /// the information stored in the <c>render</c> object
     /// </summary>
-    void GenerateNewEnemy() {
+    private void GenerateNewEnemy() {
         System.Random random = new System.Random();
         if (currentEnemy)
             Destroy(currentEnemy);
@@ -56,8 +60,8 @@ public class GameHandler : MonoBehaviour
     /// function to generate the new list of valid enemies.
     /// </summary>
     /// <param name="floor">The level of the floor to be generated</param>
-    void GenerateFloor(int floor) {
-        validMonsters = MonsterDefinitions.TEMPLoadLevel();
+    private void GenerateFloor(int floor) {
+        validMonsters = MonsterDefinitions.LoadLevel(floor);
 	}
 
     /// <summary>
@@ -68,6 +72,14 @@ public class GameHandler : MonoBehaviour
         enemyData.currentHealth -= tapDamage;
         if (enemyData.currentHealth <= 0) {
             currentCoins += enemyData.coinValue;
+            currentXP += enemyData.xpValue;
+            Debug.Log(currentXP);
+            if (currentXP >= NEXT_FLOOR_XP[currentFloor - 1]) {
+                currentXP -= NEXT_FLOOR_XP[currentFloor - 1];
+                currentFloor++;
+                GenerateFloor(currentFloor);
+			}
+            render.xpBar.fillAmount = currentXP / (float)NEXT_FLOOR_XP[currentFloor - 1];
             GenerateNewEnemy();
 		}
         render.enemyHealthBar.fillAmount = enemyData.currentHealth / (float)enemyData.maxHealth;

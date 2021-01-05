@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Render : MonoBehaviour
 {
     public Image enemyHealthBar;
+    public Image xpBar;
     public Text enemyCoin;
     public Text enemyName;
     public Text currentCoins;
@@ -17,6 +18,7 @@ public class Render : MonoBehaviour
     void Start()
     {
         enemyHealthBar = GameObject.Find("enemy_health").GetComponent<Image>();
+        xpBar = GameObject.Find("xp_bar").GetComponent<Image>();
         enemyCoin = GameObject.Find("coin_value").GetComponent<Text>();
         enemyName = GameObject.Find("enemy_name").GetComponent<Text>();
         currentCoins = GameObject.Find("current_coins").GetComponent<Text>();
