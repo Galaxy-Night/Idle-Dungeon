@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class GameHandler : MonoBehaviour
 {
 	private readonly int[] NEXT_FLOOR_XP = { 300, 600, 1800, 3600, 7200 };
+    private const int MAX_FLOOR = 5;
 
     public Render render;
     public GameObject currentEnemy;
@@ -61,6 +62,8 @@ public class GameHandler : MonoBehaviour
     /// </summary>
     /// <param name="floor">The level of the floor to be generated</param>
     private void GenerateFloor(int floor) {
+        if (floor > 4)
+            floor = 4;
         validMonsters = MonsterDefinitions.LoadLevel(floor);
 	}
 
