@@ -35,7 +35,7 @@ public class Render : MonoBehaviour
     /// </summary>
     /// <param name="_enemy">The enemy for which the information is to be
     /// displayed</param>
-    public void NewEnemyDisplay(EnemyObject _enemy) {
+    public void NewEnemyDisplay(Enemy _enemy) {
         enemyName.text = _enemy.enemyName;
         enemyCoin.text = _enemy.coinValue.ToString();
         enemyHealthBar.fillAmount = 1;

@@ -11,7 +11,7 @@ public class GameHandler : MonoBehaviour
 {
     public Render render;
     public GameObject currentEnemy;
-    private EnemyObject enemyData;
+    private Enemy enemyData;
     private GameObject[] validMonsters;
 
     int currentCoins;
@@ -46,7 +46,7 @@ public class GameHandler : MonoBehaviour
             Destroy(currentEnemy);
         currentEnemy = Instantiate(validMonsters[random.Next(0, validMonsters.Length)]);
         currentEnemy.transform.parent = transform;
-        enemyData = currentEnemy.GetComponent<EnemyObject>();
+        enemyData = currentEnemy.GetComponent<Enemy>();
         render.NewEnemyDisplay(enemyData);
         render.currentCoins.text = currentCoins.ToString();
     }

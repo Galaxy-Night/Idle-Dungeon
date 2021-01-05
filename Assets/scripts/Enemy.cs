@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// <c>EnemyObject</c> represents the current enemy that the user is 
-/// facing. It contains the information needed to handle the user's interaction
-/// with the enemy.
+/// <c>Enemy</c> represents the current enemy that the user is facing. It 
+/// contains the information needed to handle the user's interaction with the 
+/// enemy.
 /// </summary>
 
-public class EnemyObject : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public string enemyName;
     public int maxHealth;
