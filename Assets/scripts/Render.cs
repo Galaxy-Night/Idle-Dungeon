@@ -10,6 +10,7 @@ public class Render : MonoBehaviour
 {
     public Image enemyHealthBar;
     public Image xpBar;
+    public Image totalHealth;
     public Text enemyCoin;
     public Text enemyName;
     public Text currentCoins;
@@ -18,6 +19,7 @@ public class Render : MonoBehaviour
     void Start()
     {
         enemyHealthBar = GameObject.Find("enemy_health").GetComponent<Image>();
+        totalHealth = GameObject.Find("health_bar").GetComponent<Image>();
         xpBar = GameObject.Find("xp_bar").GetComponent<Image>();
         enemyCoin = GameObject.Find("coin_value").GetComponent<Text>();
         enemyName = GameObject.Find("enemy_name").GetComponent<Text>();
@@ -27,7 +29,7 @@ public class Render : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -41,5 +43,15 @@ public class Render : MonoBehaviour
         enemyName.text = _enemy.enemyName;
         enemyCoin.text = _enemy.coinValue.ToString();
         enemyHealthBar.fillAmount = 1;
-	}
+    }
+
+    public void UpdateCoinDisplay(int coinTotal) {
+        currentCoins.text = coinTotal.ToString();
+    }
+
+    public void UpdateTotalHealth(int max, int current) {
+        totalHealth.fillAmount = current / (float)max;
+        Debug.Log(current/ (float)max);
+        //Debug.Log("auto");
+    }
 }

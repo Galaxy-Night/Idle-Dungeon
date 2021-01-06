@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public int currentHealth;
     public int coinValue;
     public int xpValue;
+    public int damage;
+    public int damageInterval;
 
     // Start is called before the first frame update
     void Start()
