@@ -16,7 +16,8 @@ public class UnlockButton : MonoBehaviour
         
     }
 
-	private void OnMouseDown()
+    // OnMouseDown is called when the user clicks on the object
+    private void OnMouseDown()
 	{
         SendMessageUpwards("UnlockMessage");
 	}

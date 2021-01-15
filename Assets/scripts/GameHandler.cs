@@ -107,8 +107,16 @@ public class GameHandler : MonoBehaviour
         render.enemyHealthBar.fillAmount = enemyData.currentHealth / (float)enemyData.maxHealth;
 	}
 
+    /// <summary>
+    /// <c>UnlockPartyMember</c> handles the logic that occurs when the party
+    /// member specified by <c>unlocked</c> is unlocked. 
+    /// <c>UnlockPartyMember</c> specifically handles logic that impacts 
+    /// information that is stored in <c>GameHandler</c>
+    /// </summary>
+    /// <param name="unlocked">The party member that has been unlocked,
+    /// as passed to it in <c>PartyMember</c>'s <c>UnlockMessage</c>
+    /// function</param>
     private void UnlockPartyMember(PartyMember unlocked) {
-        //Debug.Log("clicked");
         if (unlocked.unlockCost <= currentCoins) {
             currentCoins -= (int)unlocked.unlockCost;
             unlocked.Unlock();
@@ -118,13 +126,20 @@ public class GameHandler : MonoBehaviour
             totalHealthMax += unlocked.maxHealth;
             totalHealth += unlocked.currentHealth;
             render.UpdateTotalHealth(totalHealthMax, totalHealth);
-            unlocked.nameField.text = unlocked.memberName;
         }
 	}
 
+    /// <summary>
+    /// <c>LevelUpMember</c> handles the logic that occurs when the party
+    /// member specified by <c>leveledUp</c> is unlocked. 
+    /// <c>LevelUpPartyMember</c> specifically handles logic that impacts 
+    /// information that is stored in <c>GameHandler</c>
+    /// </summary>
+    /// <param name="leveledUp">The party member that has been leveledUp,
+    /// as passed to it in <c>PartyMember</c>'s <c>LevelUpMessage</c>
+    /// function</param>
     private void LevelUpPartyMember(PartyMember leveledUp) {
         if (leveledUp.unlockCost <= currentCoins) {
-            //Debug.Log("Level up!");
             leveledUp.LevelUp();
             currentCoins -= (int)leveledUp.unlockCost;
             render.UpdateCoinDisplay(currentCoins);
@@ -134,6 +149,10 @@ public class GameHandler : MonoBehaviour
         }
 	}
 
+    /// <summary>
+    /// <c>DealAutoDamage</c> deals damage caused to the player and their party
+    /// members by enemies. This damage is dealt automatically.
+    /// </summary>
     private void DealAutoDamage() {
         totalHealth -= (int)((100 / (float)totalHealthMax) * enemyData.damage);
         foreach (PartyMember member in partyMembers) {
@@ -148,15 +167,23 @@ public class GameHandler : MonoBehaviour
             }
         }
         render.UpdateTotalHealth(totalHealthMax, totalHealth);
-        //Debug.Log(totalHealth);
 	}
 
+    /// <summary>
+    /// <c>CalculateTotalHealth</c> is a function to sum the health of all
+    /// of the members of the player's party, as well as the player's base
+    /// health of 100
+    /// </summary>
     private void CalculateTotalHealth() {
         totalHealth = 100;
         foreach (PartyMember member in partyMembers)
             totalHealth += member.currentHealth;
 	}
 
+    /// <summary>
+    /// <c>DealPartyDamage</c> is a function called every second to deal damage
+    /// to the current enemy.
+    /// </summary>
     private void DealPartyDamage() {
         foreach (PartyMember member in partyMembers) {
             if (member.isUnlocked && !member.isUnconcious) {
@@ -168,10 +195,14 @@ public class GameHandler : MonoBehaviour
         }
 	}
 
+    /// <summary>
+    /// <c>HandleEnemyDeath</c> contains the logic needed when an enemy dies. 
+    /// It increases the user's current coins, moves the user to the next floor
+    /// (if nescessary), and update's the user's XP
+    /// </summary>
     private void HandleEnemyDeath() {
         currentCoins += enemyData.coinValue;
         currentXP += enemyData.xpValue;
-        //Debug.Log(currentXP);
         if (currentXP >= NEXT_FLOOR_XP[currentFloor - 1])
         {
             currentXP -= NEXT_FLOOR_XP[currentFloor - 1];
@@ -182,6 +213,10 @@ public class GameHandler : MonoBehaviour
         GenerateNewEnemy();
     }
 
+    /// <summary>
+    /// <c>PartyMemberUnlockCost</c> populates <c>unlockCost</c> with the 
+    /// potential party members and the number of coins it takes to unlock them
+    /// </summary>
     private void PartyMemberUnlockCosts() {
         unlockCost = new List<Tuple<int, GameObject>>();
         unlockCost.Add(new Tuple<int, GameObject>(10, (GameObject)Resources.Load("partyMembers/fighter")));

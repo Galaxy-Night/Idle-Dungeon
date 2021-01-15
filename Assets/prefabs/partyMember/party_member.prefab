@@ -479,6 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5164370287736017801}
   - component: {fileID: 3327665387658009386}
+  - component: {fileID: 2243261762834198877}
   m_Layer: 5
   m_Name: party_member
   m_TagString: Untagged
@@ -526,7 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5fce95480c5dc94d8fc9e7d440a37bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  memberName: 
+  currentHealth: 0
+  mRenderer: {fileID: 0}
   maxHealth: 0
   damage: 0
   currentLevel: 0
@@ -536,6 +538,25 @@ MonoBehaviour:
   isUnlocked: 0
   isVisible: 0
   isUnconcious: 0
+--- !u!114 &2243261762834198877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164370287736017806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb8d2257c331804f8f7ffd0267343bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sRenderer: {fileID: 0}
+  locked: {fileID: 0}
+  normal: {fileID: 0}
+  unconcious: {fileID: 0}
+  nameField: {fileID: 0}
+  hpBar: {fileID: 0}
+  memberName: 
 --- !u!1 &5164370287834099289
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: locked
+      value: 
+      objectReference: {fileID: 21300000, guid: fba40db165f0e9f49b45c299cc14c504,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: normal
+      value: 
+      objectReference: {fileID: 21300000, guid: e28c7079cdb4bc54bb29565d0aa73ba9,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: unconcious
+      value: 
+      objectReference: {fileID: 21300000, guid: 4ff48ad70f346f24ab909bc10cbf3d1b,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: memberName
+      value: Fighter
+      objectReference: {fileID: 0}
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
       propertyPath: memberName
@@ -50,6 +73,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 4ff48ad70f346f24ab909bc10cbf3d1b,
         type: 3}
+    - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: levelUpMultiplier
+      value: 1.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5164370287736017801, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
       propertyPath: m_LocalPosition.x

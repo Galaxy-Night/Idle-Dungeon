@@ -7,6 +7,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: locked
+      value: 
+      objectReference: {fileID: 21300000, guid: 7acaff2d335119744b108a34e7bd028e,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: normal
+      value: 
+      objectReference: {fileID: 21300000, guid: 50d5cf1954d915c43b96712872941126,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: unconcious
+      value: 
+      objectReference: {fileID: 21300000, guid: 034bac59f175eea429cc78b8db38c276,
+        type: 3}
+    - target: {fileID: 2243261762834198877, guid: 1015b2b57744b894b8ea2cb621d23645,
+        type: 3}
+      propertyPath: memberName
+      value: Archer
+      objectReference: {fileID: 0}
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
       propertyPath: memberName
