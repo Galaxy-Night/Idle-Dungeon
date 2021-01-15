@@ -10,20 +10,24 @@ using UnityEngine.UI;
 public class MemberRenderer : MonoBehaviour
 {
     private SpriteRenderer sRenderer;
+    private GameObject healReviveCost;
     public Sprite locked;
     public Sprite normal;
     public Sprite unconcious;
-    private Text nameField;
+    private GameObject nameField;
+    public GameObject HealLabel { private get; set; }
     public Image hpBar;
     public string memberName;
 
     // Start is called before the first frame update
     void Start()
     {
-        nameField = transform.Find("member_name").GetComponent<Text>();
+        nameField = transform.Find("member_name").gameObject;
+        HealLabel = transform.Find("heal_label").gameObject;
+        healReviveCost = transform.Find("heal_revive_cost").gameObject;
         hpBar = transform.Find("member_health_bar").GetComponent<Image>();
         sRenderer = transform.Find("sprite").GetComponent<SpriteRenderer>();
-        nameField.text = "?????";
+        nameField.GetComponent<Text>().text = "?????";
         sRenderer.sprite = locked;
     }
 
@@ -41,7 +45,7 @@ public class MemberRenderer : MonoBehaviour
     public void RenderUnlock()
     {
         sRenderer.sprite = normal;
-        nameField.text = memberName;
+        nameField.GetComponent<Text>().text = memberName;
     }
 
     /// <summary>
@@ -49,8 +53,39 @@ public class MemberRenderer : MonoBehaviour
     /// the <c>MemberRenderer</c> class to show that the party member has 
     /// fallen unconcious
     /// </summary>
-    public void RenderKnockOut()
+    public void RenderKnockOut(int healCost)
     {
         sRenderer.sprite = unconcious;
+        HealLabel.GetComponent<Text>().text = "Revive:";
+        healReviveCost.GetComponent<Text>().text = healCost.ToString();
     }
+
+    public void RenderInjury(int healCost) {
+        HealLabel.GetComponent<Text>().text = "Heal:";
+        nameField.SetActive(false);
+        HealLabel.SetActive(true);
+        healReviveCost.SetActive(true);
+        healReviveCost.GetComponent<Text>().text = healCost.ToString();
+	}
+
+    public void UpdateInjury(int healCost) {
+        healReviveCost.GetComponent<Text>().text = healCost.ToString();
+    }
+
+    public void RenderHeal() {
+        HealLabel.GetComponent<Text>().text = "";
+        healReviveCost.GetComponent<Text>().text = "";
+        nameField.SetActive(true);
+        HealLabel.SetActive(false);
+        healReviveCost.SetActive(false);
+	}
+
+    public void RenderRevive() {
+        HealLabel.GetComponent<Text>().text = "";
+        healReviveCost.GetComponent<Text>().text = "";
+        nameField.SetActive(true);
+        HealLabel.SetActive(false);
+        healReviveCost.SetActive(false);
+        sRenderer.sprite = normal;
+	}
 }
