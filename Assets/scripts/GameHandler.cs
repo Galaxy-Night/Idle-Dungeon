@@ -12,6 +12,7 @@ public class GameHandler : MonoBehaviour
 	private readonly int[] NEXT_FLOOR_XP = { 300, 600, 1800, 3600, 7200 };
     private const int MAX_FLOOR = 4;
     private const int PARTY_MEMBER_OFFSET = -100;
+    private const int PLAYER_START_HEALTH = 1000;
 
     public GameObject partyMemberDisplay;
 
@@ -28,6 +29,7 @@ public class GameHandler : MonoBehaviour
     int currentXP;
     int totalHealthMax;
     int totalHealth;
+    private int playerHealth;
     private int partyMembersUnlocked;
 
     private int visiblePartyMembers;
@@ -42,8 +44,9 @@ public class GameHandler : MonoBehaviour
         tapDamage = 1;
         currentFloor = 1;
         currentXP = 0;
-        totalHealth = 100;
-        totalHealthMax = 100;
+        totalHealth = PLAYER_START_HEALTH;
+        totalHealthMax = PLAYER_START_HEALTH;
+        playerHealth = PLAYER_START_HEALTH;
         visiblePartyMembers = 0;
         InvokeRepeating("DealPartyDamage", 1f, 1f);
         GenerateFloor(currentFloor);
@@ -120,7 +123,6 @@ public class GameHandler : MonoBehaviour
         if (unlocked.unlockCost <= currentCoins) {
             currentCoins -= (int)unlocked.unlockCost;
             unlocked.Unlock();
-            Debug.Log(currentCoins);
             render.UpdateCoinDisplay(currentCoins);
             partyMembers.Add(unlocked);
             totalHealthMax += unlocked.maxHealth;
@@ -154,18 +156,24 @@ public class GameHandler : MonoBehaviour
     /// members by enemies. This damage is dealt automatically.
     /// </summary>
     private void DealAutoDamage() {
-        totalHealth -= (int)((100 / (float)totalHealthMax) * enemyData.damage);
+        playerHealth -= Mathf.RoundToInt(((PLAYER_START_HEALTH / (float)totalHealthMax) * enemyData.damage));
         foreach (PartyMember member in partyMembers) {
             if (member.isUnlocked && !member.isUnconcious) {
-                float temp = member.maxHealth / (float)totalHealthMax;
-                int damage = (int)(temp * enemyData.damage);
+                int damage = Mathf.RoundToInt(((member.maxHealth / (float)totalHealthMax) * enemyData.damage));
                 member.currentHealth -= damage;
                 totalHealth -= damage;
                 member.UpdateHPBar();
-                if (member.currentHealth <= 0)
+                if (member.currentHealth <= (member.maxHealth / 2) && !member.isUnconcious) {
+                    if (!member.isInjured)
+                        member.Injure();
+                    else
+                        member.UpdateInjury();
+                }
+                if (member.currentHealth <= 0 && !member.isUnconcious)
                     member.KnockOut();
             }
         }
+        CalculateTotalHealth();
         render.UpdateTotalHealth(totalHealthMax, totalHealth);
 	}
 
@@ -175,7 +183,7 @@ public class GameHandler : MonoBehaviour
     /// health of 100
     /// </summary>
     private void CalculateTotalHealth() {
-        totalHealth = 100;
+        totalHealth = playerHealth;
         foreach (PartyMember member in partyMembers)
             totalHealth += member.currentHealth;
 	}
@@ -221,5 +229,21 @@ public class GameHandler : MonoBehaviour
         unlockCost = new List<Tuple<int, GameObject>>();
         unlockCost.Add(new Tuple<int, GameObject>(10, (GameObject)Resources.Load("partyMembers/fighter")));
         unlockCost.Add(new Tuple<int, GameObject>(100, (GameObject)Resources.Load("partyMembers/archer")));
+	}
+
+    private void HealMessage(PartyMember healed) {
+        if (currentCoins >= healed.healCost) {
+            currentCoins -= healed.healCost;
+            healed.Heal();
+            CalculateTotalHealth();
+		}
+	}
+
+    private void ReviveMessage (PartyMember revived) {
+        if (currentCoins >= revived.healCost) {
+            currentCoins -= revived.healCost;
+            revived.Revive();
+            CalculateTotalHealth();
+		}
 	}
 }

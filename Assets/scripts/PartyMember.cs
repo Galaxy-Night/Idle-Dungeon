@@ -25,6 +25,7 @@ public class PartyMember : MonoBehaviour
     public bool isUnlocked;
     public bool isVisible;
     public bool isUnconcious;
+    public bool isInjured;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class PartyMember : MonoBehaviour
         isUnlocked = false;
         isVisible = false;
         isUnconcious = false;
+        isInjured = false;
     }
 
     // Update is called once per frame
@@ -120,6 +122,40 @@ public class PartyMember : MonoBehaviour
     /// </summary>
     public void KnockOut() {
         isUnconcious = true;
-        mRenderer.RenderKnockOut();
+        isInjured = false;
+        healCost = currentLevel * maxHealth;
+        mRenderer.RenderKnockOut(healCost);
+	}
+
+    public void Injure() {
+        isInjured = true;
+        healCost = maxHealth * (1 - (currentHealth / maxHealth));
+        mRenderer.RenderInjury(healCost);
+	}
+
+    public void UpdateInjury() {
+        healCost = maxHealth * (1 - (currentHealth / maxHealth));
+        mRenderer.UpdateInjury(healCost);
+    }
+
+    private void HealReviveMessage() {
+        if (isInjured)
+            SendMessageUpwards("HealMessage", this);
+        else if (isUnconcious)
+            SendMessageUpwards("ReviveMessage", this);
+        else
+            Debug.LogError("Tried to heal a character that didn't need to be healed!");
+	}
+
+    public void Heal() {
+        isInjured = false;
+        currentHealth = maxHealth;
+        mRenderer.RenderHeal();
+	}
+
+    public void Revive() {
+        isUnconcious = false;
+        currentHealth = maxHealth;
+        mRenderer.RenderRevive();
 	}
 }

@@ -38,7 +38,7 @@ PrefabInstance:
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
       propertyPath: maxHealth
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
@@ -53,7 +53,7 @@ PrefabInstance:
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
       propertyPath: currentHealth
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 3327665387658009386, guid: 1015b2b57744b894b8ea2cb621d23645,
         type: 3}
