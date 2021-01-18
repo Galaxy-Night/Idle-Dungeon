@@ -60,6 +60,13 @@ public class MemberRenderer : MonoBehaviour
         healReviveCost.GetComponent<Text>().text = healCost.ToString();
     }
 
+    /// <summary>
+    /// <c>RenderInjury</c> updates the party member's display to reflect the
+    /// fact that they are injured. Specifically, it replaces <c>nameField</c>
+    /// with <c>HealLabel</c> and <c>healReviveCost</c>
+    /// </summary>
+    /// <param name="healCost">The number of coins it takes to heal the 
+    /// party member</param>
     public void RenderInjury(int healCost) {
         HealLabel.GetComponent<Text>().text = "Heal:";
         nameField.SetActive(false);
@@ -68,10 +75,21 @@ public class MemberRenderer : MonoBehaviour
         healReviveCost.GetComponent<Text>().text = healCost.ToString();
 	}
 
+    /// <summary>
+    /// <c>UpdateInjury</c> updates the displayed cost to heal a party member
+    /// as they become more injured
+    /// </summary>
+    /// <param name="healCost">The number of coins it takes to heal the
+    /// party member</param>
     public void UpdateInjury(int healCost) {
         healReviveCost.GetComponent<Text>().text = healCost.ToString();
     }
 
+    /// <summary>
+    /// <c>RenderHeal</c> updates the party member's display to reflect the
+    /// fact that they have been healed. It hides <c>HealLabel</c> and 
+    /// <c>healReviveCost</c> objects, and displays <c>nameField</c>
+    /// </summary>
     public void RenderHeal() {
         HealLabel.GetComponent<Text>().text = "";
         healReviveCost.GetComponent<Text>().text = "";
@@ -80,6 +98,12 @@ public class MemberRenderer : MonoBehaviour
         healReviveCost.SetActive(false);
 	}
 
+    /// <summary>
+    /// <c>RenderRevive</c> updates the party member's display to reflect the
+    /// fact that they have been revived. It hides the <c>HealLabel</c> and 
+    /// <c>healReviveCost</c> objects, displays <c>nameField</c>, and replaces
+    /// the unconcious sprite with the normal one
+    /// </summary>
     public void RenderRevive() {
         HealLabel.GetComponent<Text>().text = "";
         healReviveCost.GetComponent<Text>().text = "";

@@ -45,10 +45,23 @@ public class Render : MonoBehaviour
         enemyHealthBar.fillAmount = 1;
     }
 
+    /// <summary>
+    /// <c>UpdateCoinDisplay</c> updates the number of coins that are displayed
+    /// as the player's current total
+    /// </summary>
+    /// <param name="coinTotal">The number of coins to be displayed</param>
     public void UpdateCoinDisplay(int coinTotal) {
         currentCoins.text = coinTotal.ToString();
     }
 
+    /// <summary>
+    /// <c>UpdateTotalHealth</c> updates the total health that is displayed to
+    /// the player.
+    /// </summary>
+    /// <param name="max">The maximum possible health points the player can
+    /// have</param>
+    /// <param name="current">The current number of health points the player
+    /// has</param>
     public void UpdateTotalHealth(int max, int current) {
         totalHealth.fillAmount = current / (float)max;
         Debug.Log(current/ (float)max);
