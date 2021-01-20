@@ -126,18 +126,35 @@ public class PartyMember : MonoBehaviour
         healCost = currentLevel * maxHealth;
         mRenderer.RenderKnockOut(healCost);
 	}
-
+    
+    /// <summary>
+    /// <c>Injure</c> is called when the <c>PartyMember</c> object's 
+    /// <c>currentHealth</c> is below half of its maxiumum. It calculates 
+    /// the cost for the player to heal the injured party member, and calls
+    /// the appropriate function in <c>mRenderer</c> to reflect the party
+    /// member's injured state
+    /// </summary>
     public void Injure() {
         isInjured = true;
         healCost = maxHealth * (1 - (currentHealth / maxHealth));
         mRenderer.RenderInjury(healCost);
 	}
 
+    /// <summary>
+    /// <c>UpdateInjury</c> recalculates the cost to heal the injured party
+    /// member, and calls the appropriate function in <c>mRenderer</c> to 
+    /// display that cost
+    /// </summary>
     public void UpdateInjury() {
         healCost = maxHealth * (1 - (currentHealth / maxHealth));
         mRenderer.UpdateInjury(healCost);
     }
 
+    /// <summary>
+    /// <c>HealReviveMessage</c> exists to pass the <c>PartyMember</c> as a 
+    /// parameter to the apropriate function in <c>GameHandler</c>, depending
+    /// on wether the party member is being healed or revived. 
+    /// </summary>
     private void HealReviveMessage() {
         if (isInjured)
             SendMessageUpwards("HealMessage", this);
@@ -147,12 +164,20 @@ public class PartyMember : MonoBehaviour
             Debug.LogError("Tried to heal a character that didn't need to be healed!");
 	}
 
+    /// <summary>
+    /// <c>Heal</c> is called from <c>GameHandler</c> when the player heals a
+    /// party member.
+    /// </summary>
     public void Heal() {
         isInjured = false;
         currentHealth = maxHealth;
         mRenderer.RenderHeal();
 	}
 
+    /// <summary>
+    /// <c>Revive</c> is called from <c>GameHandler</c> when the player revives
+    /// a party member.
+    /// </summary>
     public void Revive() {
         isUnconcious = false;
         currentHealth = maxHealth;

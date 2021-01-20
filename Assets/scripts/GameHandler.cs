@@ -231,6 +231,14 @@ public class GameHandler : MonoBehaviour
         unlockCost.Add(new Tuple<int, GameObject>(100, (GameObject)Resources.Load("partyMembers/archer")));
 	}
 
+    /// <summary>
+    /// <c>HealMessage</c> determines if the user has enough coins to heal the 
+    /// party member that ran the <c>SendMessageUpwards</c> function. If the
+    /// user has enough coins, it decrements the user's coin total and calls 
+    /// the party member's <c>Heal</c> function
+    /// </summary>
+    /// <param name="healed">The <c>PartyMember</c> that is to be healed
+    /// </param>
     private void HealMessage(PartyMember healed) {
         if (currentCoins >= healed.healCost) {
             currentCoins -= healed.healCost;
@@ -239,6 +247,14 @@ public class GameHandler : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// <c>ReviveMessage</c> determines if the user has enough coins to revive
+    /// the party member that ran the appropriate <c>SendMessageUpwards</c>
+    /// function. If the user has enough coins, it decrements the user's coin
+    /// total and calls the party member's <c>Revive</c> function
+    /// </summary>
+    /// <param name="revived">The <c>PartyMember</c> that ran the 
+    /// <c>SendMessageUpwards</c> function</param>
     private void ReviveMessage (PartyMember revived) {
         if (currentCoins >= revived.healCost) {
             currentCoins -= revived.healCost;

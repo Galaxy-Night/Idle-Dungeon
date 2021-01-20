@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// <c>LoadHandler</c> is a class to handle the loading of the initial scene of
+/// the game. Eventually it will also read the state of the user's previous 
+/// game in from a file.
+/// </summary>
+
 public class LoadHandler : MonoBehaviour
 {
     AsyncOperation loading;
