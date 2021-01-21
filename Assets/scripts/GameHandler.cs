@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// <c>GameHandler</c> is a class to handle the main functionality of the game.
@@ -67,6 +68,9 @@ public class GameHandler : MonoBehaviour
             newMember.transform.SetParent(partyMemberDisplay.transform, false);
             unlockCost.RemoveAt(0);
             partyMembersUnlocked++;
+		}
+        if (totalHealth <= 0) {
+            SceneManager.LoadScene("LeaveDungeon");
 		}
     }
 
