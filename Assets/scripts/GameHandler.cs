@@ -24,7 +24,7 @@ public class GameHandler : MonoBehaviour
 
     private List<PartyMember> partyMembers;
 
-    int currentCoins;
+    public int currentCoins { get; private set; }
     int currentFloor;
     int tapDamage;
     int currentXP;
