@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PartyMemberHandler : MonoBehaviour
 {
-    [SerializeField]
-    private PartyMemberData data;
-    [SerializeField]
-    private PartyMemberUI ui;
+    public PartyMemberData data;
+    public GameObject ui;
     // Start is called before the first frame update
     void Start()
     {
-        initialize();
+
     }
 
     // Update is called once per frame
@@ -20,8 +18,8 @@ public class PartyMemberHandler : MonoBehaviour
         
     }
 
-    private void initialize() {
-        ui.initialize(data.UnlockCost, data.Locked, data.MemberName);
+    public void initialize() {
+        ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.Locked, data.MemberName);
 	}
 
     public void onUnlockClick()
@@ -31,7 +29,7 @@ public class PartyMemberHandler : MonoBehaviour
 
         if (handler.currentCoins >= data.UnlockCost) {
             data.Unlock();
-            ui.Unlock(data.Active, data.UnlockCost);
+            ui.GetComponent<PartyMemberUI>().Unlock(data.Active, data.UnlockCost);
             //handler.Unlock(data);
         }
 
@@ -41,6 +39,6 @@ public class PartyMemberHandler : MonoBehaviour
     public void TakeDamage(int _amount) {
         int returned = data.TakeDamage(_amount);
         float barFill = (float)data.CurrentHealth / data.MaxHealth;
-        ui.ChangeHPBar(barFill);
+        ui.GetComponent<PartyMemberUI>().ChangeHPBar(barFill);
 	}
 }

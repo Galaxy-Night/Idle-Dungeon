@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+using Utility;
 
 /// <summary>
 /// <c>GameHandler</c> is a class to handle the main functionality of the game.
 /// </summary>
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject uiPrefab;
 	private readonly int[] NEXT_FLOOR_XP = { 300, 600, 1800, 3600, 7200 };
     private const int MAX_FLOOR = 4;
     private const int PARTY_MEMBER_OFFSET = -100;
@@ -231,8 +236,7 @@ public class GameHandler : MonoBehaviour
     /// </summary>
     private void PartyMemberUnlockCosts() {
         unlockCost = new List<Tuple<int, GameObject>>();
-        unlockCost.Add(new Tuple<int, GameObject>(10, (GameObject)Resources.Load("partyMembers/fighter")));
-        unlockCost.Add(new Tuple<int, GameObject>(100, (GameObject)Resources.Load("partyMembers/archer")));
+        unlockCost.Add(new Tuple<int, GameObject>(10, (GameObject)Resources.Load("partyMembers/fighter_data")));
 	}
 
     /// <summary>
@@ -265,5 +269,23 @@ public class GameHandler : MonoBehaviour
             revived.Revive();
             CalculateTotalHealth();
 		}
+	}
+
+    private void ConstructPartyMember(PartyMemberData _data) {
+        //get party member container's transform
+        Transform parent = GameObject.Find("party_members").GetComponent<Transform>();
+        //get UI container's transform
+        Transform uiParent = GameObject.Find("Content").GetComponent<Transform>();
+        //construct new party member handler and UI objects
+        GameObject newMember = new GameObject(_data.MemberName);
+        
+        newMember.AddComponent<PartyMemberHandler>();
+        newMember.GetComponent<PartyMemberHandler>().ui = Instantiate(uiPrefab);
+        //add new party member and ui to container objects
+        newMember.transform.SetParent(parent);
+        newMember.GetComponent<PartyMemberHandler>().ui.transform.SetParent(uiParent);
+        newMember.GetComponent<PartyMemberHandler>().ui.transform.position = new Vector3Int(0, (0 + PARTY_MEMBER_OFFSET * partyMembersUnlocked), 0);
+
+        newMember.GetComponent<PartyMemberHandler>().data = _data;
 	}
 }
