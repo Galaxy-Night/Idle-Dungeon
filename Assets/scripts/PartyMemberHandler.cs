@@ -22,7 +22,7 @@ public class PartyMemberHandler : MonoBehaviour
         ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.Locked, data.MemberName);
 	}
 
-    public void onUnlockClick()
+    /*public void onUnlockClick()
     {
         GameObject temp = GameObject.Find("game_handler");
         GameHandler handler = temp.GetComponent<GameHandler>();
@@ -34,7 +34,7 @@ public class PartyMemberHandler : MonoBehaviour
         }
 
         Debug.Log("Clicked");
-    }
+    }*/
 
     public void TakeDamage(int _amount) {
         int returned = data.TakeDamage(_amount);
