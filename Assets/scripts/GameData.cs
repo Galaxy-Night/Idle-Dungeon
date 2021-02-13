@@ -10,9 +10,15 @@ public class GameData
 {
     public List<Tuple<int, PartyMemberData>> unlockCost;
     public int currentCoins;
+    public int tapDamage;
+    public int currentXP;
+    public int currentFloor;
 
     public GameData() {
         unlockCost = FileIO.GetUnlockCosts("Assets/Resources/txt/member_defs.txt");
         currentCoins = 0;
+        currentXP = 0;
+        tapDamage = 1;
+        currentFloor = 1;
     }
 }

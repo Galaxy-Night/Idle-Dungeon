@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Move sprite information here or to the UI class
 public class PartyMemberHandler : MonoBehaviour
 {
     public PartyMemberData data;
@@ -18,7 +19,8 @@ public class PartyMemberHandler : MonoBehaviour
         
     }
 
-    public void initialize() {
+    public void initialize(PartyMemberData _data) {
+        data = _data;
         ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.Locked, data.MemberName);
 	}
 

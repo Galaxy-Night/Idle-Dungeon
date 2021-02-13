@@ -15,6 +15,13 @@ public class Game : MonoBehaviour
     private GameData data;
     [SerializeField]
     private GameObject uiPrefab;
+    [SerializeField]
+    private GameObject enemyUI;
+
+    private List<List<EnemyData>> validEnemies;
+
+    private GameObject currentEnemy;
+    private EnemyHandler currentEnemyHandler;
 
     private List<GameObject> partyMemberHandlers;
     private int partyMembersUnlocked;
@@ -24,20 +31,23 @@ public class Game : MonoBehaviour
         data = new GameData();
         partyMemberHandlers = new List<GameObject>();
         partyMembersUnlocked = 1;
-        ConstructPartyMember(data.unlockCost[0].Item2);
+        validEnemies = new List<List<EnemyData>>();
+        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 0));
+        ConstructEnemy(validEnemies[0][0]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
     /// <c>ConstructPartyMember</c> creates the appropriate <c>GameObjects</c>
     /// to represent the party member
     /// </summary>
-    /// <param name="_data"></param>
+    /// <param name="_data">The <c>PartyMemberData</c> object corresponding to
+    /// the party member being created</param>
     private void ConstructPartyMember(PartyMemberData _data)
     {
         //get party member container's transform
@@ -50,14 +60,48 @@ public class Game : MonoBehaviour
         newMember.AddComponent<PartyMemberHandler>();
         //set member variables
         newMember.GetComponent<PartyMemberHandler>().ui = Instantiate(uiPrefab, uiParent);
-        newMember.GetComponent<PartyMemberHandler>().data = _data;
         //initialize UI data
-        newMember.GetComponent<PartyMemberHandler>().initialize();
+        newMember.GetComponent<PartyMemberHandler>().initialize(_data);
 
         newMember.transform.SetParent(parent);
         newMember.GetComponent<PartyMemberHandler>().ui.GetComponent<RectTransform>().localPosition = 
             new Vector3Int(0, PARTY_MEMBER_OFFSET * partyMembersUnlocked, 0);
 
         partyMemberHandlers.Add(newMember);
+    }
+
+    /// <summary>
+    /// <c>ConstructEnemy</c> creates the appropriate <c>GameObject</c>s to 
+    /// represent an enemy
+    /// </summary>
+    /// <param name="data">The <c>EnemyData</c> object corresponding to the 
+    /// enemy to be created</param>
+    private void ConstructEnemy(EnemyData data) {
+        Transform parent = GameObject.Find("game_handler").GetComponent<Transform>();
+        Transform uiParent = GameObject.Find("Canvas").GetComponent<Transform>();
+
+        GameObject enemy = new GameObject(data.EnemyName);
+        enemy.AddComponent<EnemyHandler>();
+        currentEnemyHandler = enemy.GetComponent<EnemyHandler>();
+        currentEnemyHandler.ui = Instantiate(enemyUI, uiParent);
+        currentEnemyHandler.EnemyHandlerInitialize(new EnemyData(data));
+
+        enemy.transform.SetParent(parent);
+
+        currentEnemy = enemy;
+	}
+
+    public void ClickEnemyDamage() {
+        int status = currentEnemyHandler.TakeDamage(data.tapDamage);
+        if (status == PartyMemberData.DEATH_INDICATOR)
+            HandleEnemyDeath();
+	}
+
+    private void HandleEnemyDeath() {
+        data.currentCoins += currentEnemyHandler.Data.CoinValue;
+        data.currentXP += currentEnemyHandler.Data.XpValue;
+        Destroy(currentEnemyHandler.ui);
+        Destroy(currentEnemy);
+        ConstructEnemy(validEnemies[0][0]);
     }
 }

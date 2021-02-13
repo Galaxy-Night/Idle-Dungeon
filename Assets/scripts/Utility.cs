@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using UnityEngine;
 
@@ -31,5 +32,34 @@ namespace Utility {
 			}
 			return returned;
 		} 
+
+		public static List<EnemyData> GetFloorEnemies(string location, int floor) {
+			List<EnemyData> returned = new List<EnemyData>();
+			foreach(var line in File.ReadLines(location + "lvl" + floor.ToString() + "_defs.txt")) {
+				var data = line.Split(' ');
+				string name = "";
+				for (int i = 6; i < data.Length; i++)
+					name += data[i];
+				EnemyData enemy = new EnemyData(name, int.Parse(data[0]), int.Parse(data[1]), int.Parse(data[2]), int.Parse(data[3]), 
+					int.Parse(data[4]), int.Parse(data[5]));
+				returned.Add(enemy);
+			}
+			return returned;
+		}
+	}
+
+	/// <summary>
+	/// A class to handle the manipulation of strings
+	/// </summary>
+	public static class StringManip {
+		/// <summary>
+		/// Removes the whitespace characters from a string
+		/// </summary>
+		/// <param name="toStrip">the string from which the whitespace is to be
+		/// removed</param>
+		/// <returns>A string with the whitespace removed</returns>
+		public static string StripWhitespace(string toStrip) {
+			return Regex.Replace(toStrip, @"\s+", String.Empty);
+		}
 	}
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// <c>PartyMemberUI</c> is a class to handle the display of a party member's information to the
 /// player
 /// </summary>
+//TODO: move sprite information here or to the handler class
 public class PartyMemberUI : MonoBehaviour
 {
 	[SerializeField]
