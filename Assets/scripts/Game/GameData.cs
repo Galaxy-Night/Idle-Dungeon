@@ -8,6 +8,7 @@ using Utility;
 /// </summary>
 public class GameData
 {
+    public readonly int[] XP_TO_LEVEL = new int[] { 300, 600, 1800, 3600, 7200 };
     public List<Tuple<int, PartyMemberData>> unlockCost;
     public int currentCoins;
     public int tapDamage;

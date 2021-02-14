@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
 {
     private const int PARTY_MEMBER_OFFSET = -75;
 
+    private GameUI ui;
     private GameData data;
     [SerializeField]
     private GameObject uiPrefab;
@@ -29,6 +30,7 @@ public class Game : MonoBehaviour
     void Start()
     {
         data = new GameData();
+        ui = gameObject.GetComponent<GameUI>();
         partyMemberHandlers = new List<GameObject>();
         partyMembersUnlocked = 1;
         validEnemies = new List<List<EnemyData>>();
@@ -100,6 +102,7 @@ public class Game : MonoBehaviour
     private void HandleEnemyDeath() {
         data.currentCoins += currentEnemyHandler.Data.CoinValue;
         data.currentXP += currentEnemyHandler.Data.XpValue;
+        ui.ChangeXPBar((float) data.currentXP / data.XP_TO_LEVEL[data.currentFloor]);
         Destroy(currentEnemyHandler.ui);
         Destroy(currentEnemy);
         ConstructEnemy(validEnemies[0][0]);
