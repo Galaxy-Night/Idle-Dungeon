@@ -35,6 +35,8 @@ public class Game : MonoBehaviour
         partyMembersUnlocked = 1;
         validEnemies = new List<List<EnemyData>>();
         validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 0));
+        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 1));
+        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 2));
         ConstructEnemy(validEnemies[0][0]);
     }
 
@@ -100,11 +102,12 @@ public class Game : MonoBehaviour
 	}
 
     private void HandleEnemyDeath() {
+        int floor = UnityEngine.Random.Range(data.currentFloor - 1, data.currentFloor + 2);
         data.currentCoins += currentEnemyHandler.Data.CoinValue;
         data.currentXP += currentEnemyHandler.Data.XpValue;
         ui.ChangeXPBar((float) data.currentXP / data.XP_TO_LEVEL[data.currentFloor]);
         Destroy(currentEnemyHandler.ui);
         Destroy(currentEnemy);
-        ConstructEnemy(validEnemies[0][0]);
+        ConstructEnemy(validEnemies[floor][UnityEngine.Random.Range(0, validEnemies[0].Count)]);
     }
 }

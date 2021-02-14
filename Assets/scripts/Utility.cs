@@ -39,7 +39,8 @@ namespace Utility {
 				var data = line.Split(' ');
 				string name = "";
 				for (int i = 6; i < data.Length; i++)
-					name += data[i];
+					name += data[i] + " ";
+				name = name.TrimEnd();
 				EnemyData enemy = new EnemyData(name, int.Parse(data[0]), int.Parse(data[1]), int.Parse(data[2]), int.Parse(data[3]), 
 					int.Parse(data[4]), int.Parse(data[5]));
 				returned.Add(enemy);

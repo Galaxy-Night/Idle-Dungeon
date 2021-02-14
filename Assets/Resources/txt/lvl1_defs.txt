@@ -1,0 +1,4 @@
+25 50 75 10 1 1 Looter
+25 50 75 10 1 1 Poisonous Snake
+25 50 75 10 1 1 Swarm of Bats
+30 75 100 15 1 1 Zombie

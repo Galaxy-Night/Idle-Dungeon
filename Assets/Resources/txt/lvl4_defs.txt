@@ -1,0 +1,3 @@
+50 250 300 180 1 4 Raider
+65 250 400 250 1 4 Swarm of Giant Bats
+80 300 525 300 1 4 Wyrmling

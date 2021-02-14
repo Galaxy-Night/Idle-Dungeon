@@ -1,0 +1,3 @@
+20 80 125 50 1 2 Grey Ooze
+30 100 175 75 1 2 Giant Spider
+50 70 100 40 1 2 Mimic
