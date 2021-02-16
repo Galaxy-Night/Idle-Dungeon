@@ -14,6 +14,7 @@ public class GameData
     public int tapDamage;
     public int currentXP;
     public int currentFloor;
+    public int partyMembersUnlocked;
 
     public GameData() {
         unlockCost = FileIO.GetUnlockCosts("Assets/Resources/txt/member_defs.txt");
@@ -21,5 +22,6 @@ public class GameData
         currentXP = 0;
         tapDamage = 1;
         currentFloor = 1;
+        partyMembersUnlocked = 0;
     }
 }

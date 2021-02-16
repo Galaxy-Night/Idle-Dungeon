@@ -23,11 +23,12 @@ public class EnemyHandler : MonoBehaviour
         ui.GetComponent<EnemyUI>().EnemyUIInitialize(Data.EnemyName, Data.XpValue, Data.CoinValue, Data.Level);
 	}
 
-    public int TakeDamage(int amount) {
+    public int TakeDamage(int amount, bool fromTap) {
         int returned = Data.TakeDamage(amount);
         float barFill = (float)Data.CurrentHealth / Data.MaxHealth;
         ui.GetComponent<EnemyUI>().ChangeEnemyHPBar(barFill);
-        ui.GetComponent<EnemyUI>().ShowDamage(amount);
+        if (fromTap)
+            ui.GetComponent<EnemyUI>().ShowDamage(amount);
         return returned;
     }
 

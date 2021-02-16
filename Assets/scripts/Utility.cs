@@ -26,7 +26,8 @@ namespace Utility {
 			List<Tuple<int, PartyMemberData>> returned = new List<Tuple<int, PartyMemberData>>();
 			foreach(var line in File.ReadLines(location)) {
 				var data = line.Split(' ');
-				PartyMemberData partyMember = new PartyMemberData(data[0], int.Parse(data[1]), int.Parse(data[2]), float.Parse(data[3]));
+				PartyMemberData partyMember = new PartyMemberData(data[0], int.Parse(data[1]), int.Parse(data[2]), float.Parse(data[3]), 
+					int.Parse(data[4]));
 				Tuple<int, PartyMemberData> added = new Tuple<int, PartyMemberData>(int.Parse(data[2]), partyMember);
 				returned.Add(added);
 			}

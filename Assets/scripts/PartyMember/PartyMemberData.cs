@@ -8,15 +8,18 @@ public class PartyMemberData
 {
     public static readonly int INJURED_INDICATOR = 1;
     public static readonly int DEATH_INDICATOR = 2;
-    
-    public string MemberName { get; private set; }
-    public int MaxHealth { get; private set; }
-    public int UnlockCost { get; private set; }
+
+    public readonly string MemberName;
+    public readonly int MaxHealth;
+    public readonly int UnlockCost;
+    private readonly int StartingDamage;
     public Sprite Locked { get; private set; }
     public Sprite Active { get; private set; }
     public int CurrentLevel { get; private set; }
     public int LevelCost { get; private set; }
     public int CurrentHealth { get; private set; }
+
+    public int Damage { get; private set; }
 
     private float costMultiplier;
 
@@ -28,7 +31,7 @@ public class PartyMemberData
     /// <param name="_unlockCost">The cost to unlock that party member</param>
     /// <param name="_costMultiplier">How much the party member's cost changes each time the level 
     /// up</param>
-    public PartyMemberData(string _MemberName, int _maxHealth, int _unlockCost, float _costMultiplier) {
+    public PartyMemberData(string _MemberName, int _maxHealth, int _unlockCost, float _costMultiplier, int _damage) {
         //generate locations of sprites
         string activeLocation = "partymembers/" + _MemberName.ToLower();
         string lockedLocation = activeLocation + "_blackout";
@@ -40,6 +43,8 @@ public class PartyMemberData
         LevelCost = _unlockCost;
         CurrentHealth = _maxHealth;
         costMultiplier = _costMultiplier;
+        StartingDamage = _damage;
+        Damage = 0;
 
         Active = Resources.Load<Sprite>(activeLocation);
         Locked = Resources.Load<Sprite>(lockedLocation);
@@ -48,9 +53,10 @@ public class PartyMemberData
     /// <summary>
     /// Updates the relevant data when a party member is unlocked
     /// </summary>
-    public void Unlock() {
+    public void LevelUp() {
         CurrentLevel++;
-        LevelCost = UnlockCost * (int)Mathf.Pow(costMultiplier, CurrentLevel);
+        LevelCost = (int)(UnlockCost * Mathf.Pow(costMultiplier, CurrentLevel));
+        Damage += StartingDamage;
 	}
 
     /// <summary>

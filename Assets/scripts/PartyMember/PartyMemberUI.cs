@@ -47,11 +47,11 @@ public class PartyMemberUI : MonoBehaviour
 	/// <summary>
 	/// <c>onUnlockClick</c> runs when the unlock button is clicked
 	/// </summary>
-	/*public void onUnlockClick() {
-		GameObject temp = GameObject.Find("member");
+	public void onUnlockClick() {
+		GameObject temp = GameObject.Find(name.Substring(0, name.Length - 3));
 		PartyMemberHandler handler = temp.GetComponent<PartyMemberHandler>();
 		handler.onUnlockClick();
-	}*/
+	}
 
 	/// <summary>
 	/// <c>onLevelClick</c> runs when the player character gains a level
