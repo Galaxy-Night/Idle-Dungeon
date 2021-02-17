@@ -40,5 +40,26 @@ public class PartyMemberHandler : MonoBehaviour
         int returned = data.TakeDamage(_amount);
         float barFill = (float)data.CurrentHealth / data.MaxHealth;
         ui.GetComponent<PartyMemberUI>().ChangeHPBar(barFill);
+        if (returned == GameData.INJURED_INDICATOR) {
+            if (!data.IsInjured) {
+                ui.GetComponent<PartyMemberUI>().NeedsHealInit();
+                data.IsInjured = true;
+			}
+            data.NeedsHealData();
+            ui.GetComponent<PartyMemberUI>().NeedsHealUI(data.HealCost);
+        }
+
 	}
+
+    public void OnHealClick() {
+        GameObject temp = GameObject.Find("game_handler");
+        Game handler = temp.GetComponent<Game>();
+
+        if (handler.GetCurrentCoins() >= data.HealCost) {
+            handler.Heal(data.HealCost);
+            data.Heal();
+            ui.GetComponent<PartyMemberUI>().Heal();
+            ui.GetComponent<PartyMemberUI>().ChangeHPBar(1);
+		}
+    }
 }

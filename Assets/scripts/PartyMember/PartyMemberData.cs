@@ -6,9 +6,6 @@
 /// </summary>
 public class PartyMemberData
 {
-    public static readonly int INJURED_INDICATOR = 1;
-    public static readonly int DEATH_INDICATOR = 2;
-
     public readonly string MemberName;
     public readonly int MaxHealth;
     public readonly int UnlockCost;
@@ -18,8 +15,10 @@ public class PartyMemberData
     public int CurrentLevel { get; private set; }
     public int LevelCost { get; private set; }
     public int CurrentHealth { get; private set; }
-
     public int Damage { get; private set; }
+    public int HealCost { get; private set; }
+    public bool IsInjured;
+    public bool IsDead;
 
     private float costMultiplier;
 
@@ -45,6 +44,9 @@ public class PartyMemberData
         costMultiplier = _costMultiplier;
         StartingDamage = _damage;
         Damage = 0;
+        HealCost = 0;
+        IsInjured = false;
+        IsDead = false;
 
         Active = Resources.Load<Sprite>(activeLocation);
         Locked = Resources.Load<Sprite>(lockedLocation);
@@ -68,13 +70,24 @@ public class PartyMemberData
     public int TakeDamage(int _amount) {
         CurrentHealth -= _amount;
         if (CurrentHealth <= MaxHealth / 2 && CurrentHealth > 0) {
-            return INJURED_INDICATOR;
+            return GameData.INJURED_INDICATOR;
 		}
         else if (CurrentHealth <= 0) {
-            return DEATH_INDICATOR;
+            return GameData.DEATH_INDICATOR;
 		}
         else {
             return 0;
 		}
+	}
+
+    public void NeedsHealData() {
+        float healthLeft = (float)CurrentHealth / MaxHealth;
+        HealCost = (int)(LevelCost * (1 - healthLeft));
+	}
+
+    public void Heal() {
+        CurrentHealth = MaxHealth;
+        HealCost = 0;
+        IsInjured = false;
 	}
 }

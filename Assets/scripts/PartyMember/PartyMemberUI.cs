@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class PartyMemberUI : MonoBehaviour
 {
 	[SerializeField]
-	private Text memberName;
+	private GameObject memberName;
 	[SerializeField]
 	private Button unlockButton;
 	[SerializeField]
@@ -24,6 +24,10 @@ public class PartyMemberUI : MonoBehaviour
 	private GameObject currentLevel;
 	[SerializeField]
 	private Image hpBar;
+	[SerializeField]
+	private GameObject healButton;
+	[SerializeField]
+	private GameObject healCost;
 
 	private void Start()
 	{
@@ -60,6 +64,11 @@ public class PartyMemberUI : MonoBehaviour
 		Debug.Log("Level Up!");
 	}
 
+	public void onHealClick() {
+		GameObject temp = GameObject.Find(name.Substring(0, name.Length - 3));
+		PartyMemberHandler handler = temp.GetComponent<PartyMemberHandler>();
+		handler.OnHealClick();
+	}
 	/// <summary>
 	/// <c>Unlock</c> handles the UI changes that occur when a character is first unlocked
 	/// </summary>
@@ -90,5 +99,21 @@ public class PartyMemberUI : MonoBehaviour
 	/// <param name="_fill">How far the hp bar should be filled</param>
 	public void ChangeHPBar(float _fill) {
 		hpBar.fillAmount = _fill;
+	}
+
+	public void NeedsHealUI(int cost) {
+		healCost.GetComponent<Text>().text = cost.ToString();
+	}
+
+	public void NeedsHealInit() {
+		memberName.SetActive(false);
+		healButton.SetActive(true);
+		healCost.SetActive(true);
+	}
+
+	public void Heal() {
+		memberName.SetActive(true);
+		healButton.SetActive(false);
+		healCost.SetActive(false);
 	}
 }

@@ -32,7 +32,8 @@ public class Game : MonoBehaviour
         ui = gameObject.GetComponent<GameUI>();
         partyMemberHandlers = new List<PartyMemberHandler>();
         ConstructEnemy(data.validEnemies[0][0]); //Always starts with an Animated Shrub
-        InvokeRepeating("AutoEnemyDamage", 0, 1f);
+        InvokeRepeating("AutoEnemyDamage", 1, 1f);
+        InvokeRepeating("AutoPlayerDamage", 1, 1f);
     }
 
     // Update is called once per frame
@@ -96,7 +97,7 @@ public class Game : MonoBehaviour
 
     public void ClickEnemyDamage() {
         int status = currentEnemyHandler.TakeDamage(data.tapDamage, true);
-        if (status == PartyMemberData.DEATH_INDICATOR)
+        if (status == GameData.DEATH_INDICATOR)
             HandleEnemyDeath();
 	}
 
@@ -130,16 +131,37 @@ public class Game : MonoBehaviour
     }
 
     public void UnlockPartyMember(PartyMemberHandler handler) {
-        data.currentCoins -= handler.data.UnlockCost;
+        data.UnlockMember(handler.data);
         ui.ChangeCurrentCoins(data.currentCoins);
+        ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
         partyMemberHandlers.Add(handler);
 	}
 
     public void AutoEnemyDamage() {
         foreach(PartyMemberHandler member in partyMemberHandlers) {
             int status = currentEnemyHandler.TakeDamage(member.data.Damage, false);
-            if (status == PartyMemberData.DEATH_INDICATOR)
+            if (status == GameData.DEATH_INDICATOR)
                 HandleEnemyDeath();
 		}
+	}
+
+    public void AutoPlayerDamage() {
+        int damage = currentEnemyHandler.Data.Damage;
+        int playerDamage = (int)Math.Round(damage * ((float)data.STARTING_HEALTH / data.totalHealth));
+        ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
+        Debug.Log(playerDamage);
+        data.playerHealth -= playerDamage;
+        data.currentHealth -= playerDamage;
+        foreach(PartyMemberHandler member in partyMemberHandlers) {
+            int damageTaken = (int)Math.Round(damage * ((float)member.data.MaxHealth / data.totalHealth));
+            Debug.Log(damageTaken);
+            member.TakeDamage(damageTaken);
+            data.currentHealth -= damageTaken;
+            
+		}
+    }
+
+    public void Heal(int cost) {
+        data.currentCoins -= cost;
 	}
 }

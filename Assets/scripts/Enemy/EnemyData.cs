@@ -42,6 +42,6 @@ public class EnemyData
 		if (CurrentHealth > 0)
 			return 0;
 		else
-			return PartyMemberData.DEATH_INDICATOR;
+			return GameData.DEATH_INDICATOR;
 	}
 }
