@@ -36,7 +36,6 @@ public class EnemyUI : MonoBehaviour
     public void EnemyUIInitialize(string _enemyName, int _xpValue, int _coinValue, int level) {
         //Generate location where sprite is saved
         string spriteLocation = "enemy/lvl" + level.ToString() + "/" + StringManip.StripWhitespace(_enemyName.ToLower());
-        Debug.Log(spriteLocation);
 
         enemyName.text = _enemyName;
         xpValue.text = _xpValue.ToString();

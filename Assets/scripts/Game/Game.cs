@@ -20,8 +20,6 @@ public class Game : MonoBehaviour
     [SerializeField]
     private GameObject enemyUI;
 
-    private List<List<EnemyData>> validEnemies;
-
     private GameObject currentEnemy;
     private EnemyHandler currentEnemyHandler;
 
@@ -33,11 +31,7 @@ public class Game : MonoBehaviour
         data = new GameData();
         ui = gameObject.GetComponent<GameUI>();
         partyMemberHandlers = new List<PartyMemberHandler>();
-        validEnemies = new List<List<EnemyData>>();
-        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 0));
-        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 1));
-        validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 2));
-        ConstructEnemy(validEnemies[0][0]); //Always starts with an Animated Shrub
+        ConstructEnemy(data.validEnemies[0][0]); //Always starts with an Animated Shrub
         InvokeRepeating("AutoEnemyDamage", 0, 1f);
     }
 
@@ -107,17 +101,15 @@ public class Game : MonoBehaviour
 	}
 
     private void HandleEnemyDeath() {
-        int floor = UnityEngine.Random.Range(data.currentFloor - 1, data.currentFloor + 2);
+        int floor = UnityEngine.Random.Range(0, 3);
+        int enemy = UnityEngine.Random.Range(0, data.validEnemies[floor].Count);
+        Debug.Log($"{floor} {enemy}");
         data.currentCoins += currentEnemyHandler.Data.CoinValue;
         data.currentXP += currentEnemyHandler.Data.XpValue;
-        ui.ChangeXPBar((float) data.currentXP / data.XP_TO_LEVEL[data.currentFloor]);
-        ui.ChangeCurrentCoins(data.currentCoins);
         Destroy(currentEnemyHandler.ui);
         Destroy(currentEnemy);
-        //TODO: sometimes throws an out of range bug on the random.range part
-        ConstructEnemy(validEnemies[floor][UnityEngine.Random.Range(0, validEnemies[0].Count)]);
 
-        Debug.Log(data.currentCoins / 2);
+        //should next party member be displayed?
         if (data.unlockCost.Count > 0)
         {
             if (data.unlockCost[0].Item1 / 2 <= data.currentCoins)
@@ -126,6 +118,15 @@ public class Game : MonoBehaviour
                 data.unlockCost.RemoveAt(0);
             }
         }
+        //should player move to next floor?
+        if (data.currentXP > data.XP_TO_LEVEL[data.currentFloor - 1]) {
+            data.AdvanceFloor();
+		}
+        //update UI
+        ui.ChangeXPBar((float)data.currentXP / data.XP_TO_LEVEL[data.currentFloor - 1]);
+        ui.ChangeCurrentCoins(data.currentCoins);
+        //Create the next enemy
+        ConstructEnemy(data.validEnemies[floor][enemy]);
     }
 
     public void UnlockPartyMember(PartyMemberHandler handler) {
