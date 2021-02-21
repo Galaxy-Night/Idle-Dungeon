@@ -26,13 +26,12 @@ public class PartyMemberHandler : MonoBehaviour
 
     public void onUnlockClick()
     {
-        GameObject temp = GameObject.Find("game_handler");
-        Game handler = temp.GetComponent<Game>();
+        Game game = FindGame();
 
-        if (handler.GetCurrentCoins() >= data.UnlockCost) {
+        if (game.GetCurrentCoins() >= data.UnlockCost) {
             data.LevelUp();
             ui.GetComponent<PartyMemberUI>().Unlock(data.LevelCost);
-            handler.UnlockPartyMember(this);
+            game.UnlockPartyMember(this);
         }
     }
 
@@ -59,18 +58,30 @@ public class PartyMemberHandler : MonoBehaviour
 	}
 
     public void OnHealClick() {
-        GameObject temp = GameObject.Find("game_handler");
-        Game handler = temp.GetComponent<Game>();
+        Game game = FindGame();
 
-        if (handler.GetCurrentCoins() >= data.HealCost) {
+        if (game.GetCurrentCoins() >= data.HealCost) {
             data.Heal();
-            handler.Heal(data.HealCost);
+            game.HealLevel(data.HealCost);
             ui.GetComponent<PartyMemberUI>().Heal();
             ui.GetComponent<PartyMemberUI>().ChangeHPBar(1);
 		}
     }
 
     public void OnLevelClick() {
-        Debug.Log("LevelUp!");
-	}
+        Game game = FindGame();
+        if (game.GetCurrentCoins() >= data.HealCost)
+        {
+            Debug.Log("Level Up!");
+            int oldCost = data.LevelUp();
+            game.HealLevel(oldCost);
+            ui.GetComponent<PartyMemberUI>().LevelUp(data.CurrentLevel, data.HealCost);
+            ui.GetComponent<PartyMemberUI>().ChangeHPBar((float)data.CurrentHealth / data.MaxHealth);
+        }
+    }
+
+    private static Game FindGame() {
+        GameObject temp = GameObject.Find("game_handler");
+        return temp.GetComponent<Game>();
+    }
 }

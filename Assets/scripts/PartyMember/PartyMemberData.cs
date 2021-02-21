@@ -7,13 +7,14 @@
 public class PartyMemberData
 {
     public readonly string MemberName;
-    public readonly int MaxHealth;
     public readonly int UnlockCost;
     private readonly int StartingDamage;
+    private readonly int startingHealth;
 
     public int CurrentLevel { get; private set; }
     public int LevelCost { get; private set; }
     public int CurrentHealth { get; private set; }
+    public int MaxHealth { get; private set; }
     public int Damage { get; private set; }
     public int HealCost { get; private set; }
     public bool IsInjured { get; private set; }
@@ -38,6 +39,7 @@ public class PartyMemberData
         CurrentHealth = _maxHealth;
         costMultiplier = _costMultiplier;
         StartingDamage = _damage;
+        startingHealth = _maxHealth;
         Damage = 0;
         HealCost = 0;
         IsInjured = false;
@@ -47,10 +49,14 @@ public class PartyMemberData
     /// <summary>
     /// Updates the relevant data when a party member is unlocked
     /// </summary>
-    public void LevelUp() {
+    public int LevelUp() {
+        int returned = LevelCost;
         CurrentLevel++;
         LevelCost = (int)(UnlockCost * Mathf.Pow(costMultiplier, CurrentLevel));
         Damage += StartingDamage;
+        MaxHealth += startingHealth;
+        CurrentHealth += startingHealth;
+        return returned;
 	}
 
     /// <summary>

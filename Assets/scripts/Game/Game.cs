@@ -104,7 +104,6 @@ public class Game : MonoBehaviour
     private void HandleEnemyDeath() {
         int floor = UnityEngine.Random.Range(0, 3);
         int enemy = UnityEngine.Random.Range(0, data.validEnemies[floor].Count);
-        Debug.Log($"{floor} {enemy}");
         data.currentCoins += currentEnemyHandler.Data.CoinValue;
         data.currentXP += currentEnemyHandler.Data.XpValue;
         Destroy(currentEnemyHandler.ui);
@@ -157,6 +156,7 @@ public class Game : MonoBehaviour
                 data.playerHealth -= playerDamage;
         }
         foreach (PartyMemberHandler member in partyMemberHandlers) {
+            Debug.Log($"{member.data.Damage}");
             if (!member.data.IsDead) {
                 int damageTaken = (int)Math.Round(damage * ((float)member.data.MaxHealth / data.totalHealth));
                 member.TakeDamage(damageTaken);
@@ -172,7 +172,7 @@ public class Game : MonoBehaviour
             data.currentHealth += member.data.CurrentHealth;
 	}
 
-    public void Heal(int cost) {
+    public void HealLevel(int cost) {
         data.currentCoins -= cost;
         UpdateCurrentHealth();
         ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
