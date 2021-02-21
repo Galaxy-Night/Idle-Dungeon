@@ -117,7 +117,7 @@ public class PartyMemberUI : MonoBehaviour
 	}
 
 	public void UpdateHealCost(int cost) {
-		healLabel.GetComponent<Text>().text = cost.ToString();
+		healCost.text = cost.ToString();
 	}
 
 	public void Injure() {
@@ -139,6 +139,6 @@ public class PartyMemberUI : MonoBehaviour
 		memberName.SetActive(true);
 		healButton.SetActive(false);
 		healLabel.SetActive(false);
-		sprite.GetComponent<Image>().sprite = dead;
+		sprite.GetComponent<Image>().sprite = active;
 	}
 }
