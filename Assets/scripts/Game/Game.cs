@@ -180,4 +180,16 @@ public class Game : MonoBehaviour
         UpdateCurrentHealth();
         ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
 	}
+
+    public void Pause() {
+        GetComponent<BoxCollider2D>().enabled = false;
+        CancelInvoke("AutoEnemyDamage");
+        CancelInvoke("AutoPlayerDamage");
+	}
+
+    public void Unpause() {
+        GetComponent<BoxCollider2D>().enabled = true;
+        InvokeRepeating("AutoEnemyDamage", 0, 1f);
+        InvokeRepeating("AutoPlayerDamage", 0, 1f);
+    }
 }

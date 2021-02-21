@@ -11,19 +11,8 @@ public class GameUI : MonoBehaviour
     private Image xpBar;
     [SerializeField]
     private Text currentCoins;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void ChangePlayerHpBar(float fill) {
+	public void ChangePlayerHpBar(float fill) {
         healthBar.fillAmount = fill;
 	}
 

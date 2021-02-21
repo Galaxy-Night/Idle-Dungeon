@@ -75,7 +75,7 @@ public class PartyMemberHandler : MonoBehaviour
             Debug.Log("Level Up!");
             int oldCost = data.LevelUp();
             game.HealLevel(oldCost);
-            ui.GetComponent<PartyMemberUI>().LevelUp(data.CurrentLevel, data.HealCost);
+            ui.GetComponent<PartyMemberUI>().LevelUp(data.CurrentLevel, data.LevelCost);
             ui.GetComponent<PartyMemberUI>().ChangeHPBar((float)data.CurrentHealth / data.MaxHealth);
         }
     }
