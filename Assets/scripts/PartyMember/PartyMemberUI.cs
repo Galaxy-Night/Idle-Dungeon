@@ -67,22 +67,18 @@ public class PartyMemberUI : MonoBehaviour
 	/// <c>onUnlockClick</c> runs when the unlock button is clicked
 	/// </summary>
 	public void onUnlockClick() {
-		GameObject temp = GameObject.Find(name.Substring(0, name.Length - 3));
-		PartyMemberHandler handler = temp.GetComponent<PartyMemberHandler>();
-		handler.onUnlockClick();
+		FindHandler(name).onUnlockClick();
 	}
 
 	/// <summary>
 	/// <c>onLevelClick</c> runs when the player character gains a level
 	/// </summary>
 	public void onLevelClick() {
-		Debug.Log("Level Up!");
+		FindHandler(name).OnLevelClick();
 	}
 
 	public void onHealClick() {
-		GameObject temp = GameObject.Find(name.Substring(0, name.Length - 3));
-		PartyMemberHandler handler = temp.GetComponent<PartyMemberHandler>();
-		handler.OnHealClick();
+		FindHandler(name).OnHealClick();
 	}
 	/// <summary>
 	/// <c>Unlock</c> handles the UI changes that occur when a character is first unlocked
@@ -140,5 +136,10 @@ public class PartyMemberUI : MonoBehaviour
 		healButton.SetActive(false);
 		healLabel.SetActive(false);
 		sprite.GetComponent<Image>().sprite = active;
+	}
+
+	private static PartyMemberHandler FindHandler(string name) {
+		GameObject temp = GameObject.Find(name.Substring(0, name.Length - 3));
+		return temp.GetComponent<PartyMemberHandler>();
 	}
 }

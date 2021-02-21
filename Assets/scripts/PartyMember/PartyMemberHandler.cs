@@ -69,4 +69,8 @@ public class PartyMemberHandler : MonoBehaviour
             ui.GetComponent<PartyMemberUI>().ChangeHPBar(1);
 		}
     }
+
+    public void OnLevelClick() {
+        Debug.Log("LevelUp!");
+	}
 }
