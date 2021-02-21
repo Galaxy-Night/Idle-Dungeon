@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using Utility;
 
@@ -170,6 +171,8 @@ public class Game : MonoBehaviour
         data.currentHealth = data.playerHealth;
         foreach (PartyMemberHandler member in partyMemberHandlers)
             data.currentHealth += member.data.CurrentHealth;
+        if (data.currentHealth == 0)
+            SceneManager.LoadScene("LeaveDungeon");
 	}
 
     public void HealLevel(int cost) {
