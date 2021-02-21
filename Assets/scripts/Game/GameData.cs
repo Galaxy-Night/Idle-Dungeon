@@ -16,6 +16,7 @@ public class GameData
     public readonly int MAX_FLOOR = 4;
     public List<Tuple<int, PartyMemberData>> unlockCost;
     public List<List<EnemyData>> validEnemies;
+    public List<PartyMemberData> partyMemberData;
     public int currentCoins;
     public int tapDamage;
     public int currentXP;

@@ -21,7 +21,7 @@ public class PartyMemberHandler : MonoBehaviour
 
     public void initialize(PartyMemberData _data) {
         data = _data;
-        ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.Locked, data.MemberName);
+        ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.MemberName);
 	}
 
     public void onUnlockClick()
@@ -31,7 +31,7 @@ public class PartyMemberHandler : MonoBehaviour
 
         if (handler.GetCurrentCoins() >= data.UnlockCost) {
             data.LevelUp();
-            ui.GetComponent<PartyMemberUI>().Unlock(data.Active, data.LevelCost);
+            ui.GetComponent<PartyMemberUI>().Unlock(data.LevelCost);
             handler.UnlockPartyMember(this);
         }
     }
@@ -42,12 +42,19 @@ public class PartyMemberHandler : MonoBehaviour
         ui.GetComponent<PartyMemberUI>().ChangeHPBar(barFill);
         if (returned == GameData.INJURED_INDICATOR) {
             if (!data.IsInjured) {
-                ui.GetComponent<PartyMemberUI>().NeedsHealInit();
-                data.IsInjured = true;
+                ui.GetComponent<PartyMemberUI>().Injure();
 			}
-            data.NeedsHealData();
-            ui.GetComponent<PartyMemberUI>().NeedsHealUI(data.HealCost);
+            data.UpdateHealCost();
+            ui.GetComponent<PartyMemberUI>().UpdateHealCost(data.HealCost);
         }
+
+        else if (returned == GameData.DEATH_INDICATOR) {
+            if (!data.IsDead) {
+                data.Death();
+                ui.GetComponent<PartyMemberUI>().Kill();
+                ui.GetComponent<PartyMemberUI>().UpdateHealCost(data.HealCost);
+            }
+		}
 
 	}
 
@@ -56,8 +63,8 @@ public class PartyMemberHandler : MonoBehaviour
         Game handler = temp.GetComponent<Game>();
 
         if (handler.GetCurrentCoins() >= data.HealCost) {
-            handler.Heal(data.HealCost);
             data.Heal();
+            handler.Heal(data.HealCost);
             ui.GetComponent<PartyMemberUI>().Heal();
             ui.GetComponent<PartyMemberUI>().ChangeHPBar(1);
 		}

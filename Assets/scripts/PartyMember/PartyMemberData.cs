@@ -10,15 +10,14 @@ public class PartyMemberData
     public readonly int MaxHealth;
     public readonly int UnlockCost;
     private readonly int StartingDamage;
-    public Sprite Locked { get; private set; }
-    public Sprite Active { get; private set; }
+
     public int CurrentLevel { get; private set; }
     public int LevelCost { get; private set; }
     public int CurrentHealth { get; private set; }
     public int Damage { get; private set; }
     public int HealCost { get; private set; }
-    public bool IsInjured;
-    public bool IsDead;
+    public bool IsInjured { get; private set; }
+    public bool IsDead { get; private set; }
 
     private float costMultiplier;
 
@@ -31,10 +30,6 @@ public class PartyMemberData
     /// <param name="_costMultiplier">How much the party member's cost changes each time the level 
     /// up</param>
     public PartyMemberData(string _MemberName, int _maxHealth, int _unlockCost, float _costMultiplier, int _damage) {
-        //generate locations of sprites
-        string activeLocation = "partymembers/" + _MemberName.ToLower();
-        string lockedLocation = activeLocation + "_blackout";
-
         MemberName = _MemberName;
         MaxHealth = _maxHealth;
         UnlockCost = _unlockCost;
@@ -47,9 +42,6 @@ public class PartyMemberData
         HealCost = 0;
         IsInjured = false;
         IsDead = false;
-
-        Active = Resources.Load<Sprite>(activeLocation);
-        Locked = Resources.Load<Sprite>(lockedLocation);
 	}
 
     /// <summary>
@@ -80,7 +72,7 @@ public class PartyMemberData
 		}
 	}
 
-    public void NeedsHealData() {
+    public void UpdateHealCost() {
         float healthLeft = (float)CurrentHealth / MaxHealth;
         HealCost = (int)(LevelCost * (1 - healthLeft));
 	}
@@ -89,5 +81,18 @@ public class PartyMemberData
         CurrentHealth = MaxHealth;
         HealCost = 0;
         IsInjured = false;
+        IsDead = false;
 	}
+
+    public void Death() {
+        IsDead = true;
+        IsInjured = false;
+        HealCost = LevelCost * 2;
+        CurrentHealth = 0;
+	}
+
+    public void Injure () {
+        IsInjured = true;
+        IsDead = false;
+    }
 }

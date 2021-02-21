@@ -27,7 +27,13 @@ public class PartyMemberUI : MonoBehaviour
 	[SerializeField]
 	private GameObject healButton;
 	[SerializeField]
-	private GameObject healCost;
+	private Text healCost;
+	[SerializeField]
+	private GameObject healLabel;
+
+	private Sprite locked;
+	private Sprite active;
+	private Sprite dead;
 
 	private void Start()
 	{
@@ -42,9 +48,18 @@ public class PartyMemberUI : MonoBehaviour
 	/// <param name="_sprite">The sprite that should be displayed when the character is first
 	/// rendered</param>
 	/// <param name="_name">The name of the character</param>
-	public void initialize(int _unlockCost, Sprite _sprite, string _name) {
+	public void initialize(int _unlockCost, string _name) {
+		//generate locations of sprites
+		string activeLocation = "partymembers/" + _name.ToLower();
+		string lockedLocation = activeLocation + "_blackout";
+		string deadLocation = activeLocation + "_grey";
+
+		active = Resources.Load<Sprite>(activeLocation);
+		locked = Resources.Load<Sprite>(lockedLocation);
+		dead = Resources.Load<Sprite>(deadLocation);
+
 		unlockCost.text = _unlockCost.ToString();
-		sprite.GetComponent<Image>().sprite = _sprite;
+		sprite.GetComponent<Image>().sprite = locked;
 		memberName.GetComponent<Text>().text = _name;
 	}
 
@@ -74,9 +89,9 @@ public class PartyMemberUI : MonoBehaviour
 	/// </summary>
 	/// <param name="_newSprite">The updated sprite</param>
 	/// <param name="_newCost">How much it costs the character to advance to the next level</param>
-	public void Unlock(Sprite _newSprite, int _newCost) {
+	public void Unlock(int _newCost) {
 		Destroy(unlockButton.gameObject);
-		sprite.GetComponent<Image>().sprite = _newSprite;
+		sprite.GetComponent<Image>().sprite = active;
 		levelButton.SetActive(true);
 		currentLevel.SetActive(true);
 		LevelUp(1, _newCost);
@@ -101,19 +116,29 @@ public class PartyMemberUI : MonoBehaviour
 		hpBar.fillAmount = _fill;
 	}
 
-	public void NeedsHealUI(int cost) {
-		healCost.GetComponent<Text>().text = cost.ToString();
+	public void UpdateHealCost(int cost) {
+		healLabel.GetComponent<Text>().text = cost.ToString();
 	}
 
-	public void NeedsHealInit() {
+	public void Injure() {
 		memberName.SetActive(false);
 		healButton.SetActive(true);
-		healCost.SetActive(true);
+		healLabel.SetActive(true);
+		healLabel.GetComponent<Text>().text = "Heal";
+	}
+
+	public void Kill() {
+		memberName.SetActive(false);
+		healButton.SetActive(true);
+		healLabel.SetActive(true);
+		healLabel.GetComponent<Text>().text = "Revive";
+		sprite.GetComponent<Image>().sprite = dead;
 	}
 
 	public void Heal() {
 		memberName.SetActive(true);
 		healButton.SetActive(false);
-		healCost.SetActive(false);
+		healLabel.SetActive(false);
+		sprite.GetComponent<Image>().sprite = dead;
 	}
 }

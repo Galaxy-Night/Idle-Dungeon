@@ -139,29 +139,42 @@ public class Game : MonoBehaviour
 
     public void AutoEnemyDamage() {
         foreach(PartyMemberHandler member in partyMemberHandlers) {
-            int status = currentEnemyHandler.TakeDamage(member.data.Damage, false);
-            if (status == GameData.DEATH_INDICATOR)
-                HandleEnemyDeath();
+            if(!member.data.IsDead) {
+                int status = currentEnemyHandler.TakeDamage(member.data.Damage, false);
+                if (status == GameData.DEATH_INDICATOR)
+                    HandleEnemyDeath();
+            }
 		}
 	}
 
     public void AutoPlayerDamage() {
         int damage = currentEnemyHandler.Data.Damage;
         int playerDamage = (int)Math.Round(damage * ((float)data.STARTING_HEALTH / data.totalHealth));
-        ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
-        Debug.Log(playerDamage);
-        data.playerHealth -= playerDamage;
-        data.currentHealth -= playerDamage;
-        foreach(PartyMemberHandler member in partyMemberHandlers) {
-            int damageTaken = (int)Math.Round(damage * ((float)member.data.MaxHealth / data.totalHealth));
-            Debug.Log(damageTaken);
-            member.TakeDamage(damageTaken);
-            data.currentHealth -= damageTaken;
-            
+        if (data.playerHealth != 0) {
+            if (playerDamage >= data.playerHealth)
+                data.playerHealth = 0;
+            else 
+                data.playerHealth -= playerDamage;
+        }
+        foreach (PartyMemberHandler member in partyMemberHandlers) {
+            if (!member.data.IsDead) {
+                int damageTaken = (int)Math.Round(damage * ((float)member.data.MaxHealth / data.totalHealth));
+                member.TakeDamage(damageTaken);
+            }
 		}
+        UpdateCurrentHealth();
+        ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
     }
+
+    private void UpdateCurrentHealth() {
+        data.currentHealth = data.playerHealth;
+        foreach (PartyMemberHandler member in partyMemberHandlers)
+            data.currentHealth += member.data.CurrentHealth;
+	}
 
     public void Heal(int cost) {
         data.currentCoins -= cost;
+        UpdateCurrentHealth();
+        ui.ChangePlayerHpBar((float)data.currentHealth / data.totalHealth);
 	}
 }
