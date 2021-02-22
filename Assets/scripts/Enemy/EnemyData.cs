@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
+[Serializable]
 public class EnemyData
 {
 	public readonly string EnemyName;
@@ -48,7 +47,7 @@ public class EnemyData
 		DamageInterval = data.DamageInterval;
 		Level = data.Level;
 
-		CurrentHealth = MaxHealth;
+		CurrentHealth = data.CurrentHealth;
 	}
 
 	/// <summary>

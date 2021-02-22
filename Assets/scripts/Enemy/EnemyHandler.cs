@@ -6,21 +6,10 @@ public class EnemyHandler : MonoBehaviour
 {
     public EnemyData Data;
     public GameObject ui;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void EnemyHandlerInitialize(EnemyData data) {
         Data = data;
-        ui.GetComponent<EnemyUI>().EnemyUIInitialize(Data.EnemyName, Data.XpValue, Data.CoinValue, Data.Level);
+        ui.GetComponent<EnemyUI>().EnemyUIInitialize(Data.EnemyName, Data.XpValue, Data.CoinValue, Data.Level, (float)Data.CurrentHealth / Data.MaxHealth);
 	}
 
     public int TakeDamage(int amount, bool fromTap) {
