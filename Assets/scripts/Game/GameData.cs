@@ -6,6 +6,7 @@ using Utility;
 /// <summary>
 /// <c>GameData</c> is a class used to store the information from the game that needs to be saved
 /// </summary>
+[Serializable]
 public class GameData
 {
     public static readonly int DEATH_INDICATOR = 1;
@@ -16,7 +17,7 @@ public class GameData
     public readonly int MAX_FLOOR = 4;
     public List<Tuple<int, PartyMemberData>> unlockCost;
     public List<List<EnemyData>> validEnemies;
-    public List<PartyMemberData> partyMemberData;
+    public List<PartyMemberData> visiblePartyMembers;
     public int currentCoins;
     public int tapDamage;
     public int currentXP;
@@ -36,6 +37,7 @@ public class GameData
         totalHealth = STARTING_HEALTH;
         currentHealth = STARTING_HEALTH;
         playerHealth = STARTING_HEALTH;
+        visiblePartyMembers = new List<PartyMemberData>();
         validEnemies = new List<List<EnemyData>>();
         validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 0));
         validEnemies.Add(FileIO.GetFloorEnemies("Assets/Resources/txt/", 1));
@@ -55,5 +57,5 @@ public class GameData
         currentCoins -= data.UnlockCost;
         totalHealth += data.MaxHealth;
         currentHealth += data.CurrentHealth;
-	}
+    }
 }

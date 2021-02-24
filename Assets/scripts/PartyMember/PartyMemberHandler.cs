@@ -24,12 +24,17 @@ public class PartyMemberHandler : MonoBehaviour
         ui.GetComponent<PartyMemberUI>().initialize(data.UnlockCost, data.MemberName);
 	}
 
+    public void InitializeUnlocked(PartyMemberData data) {
+        this.data = data;
+        ui.GetComponent<PartyMemberUI>().InitializeUnlocked(data);
+    }
+
     public void onUnlockClick()
     {
         Game game = FindGame();
 
         if (game.GetCurrentCoins() >= data.UnlockCost) {
-            data.LevelUp();
+            data.Unlock();
             ui.GetComponent<PartyMemberUI>().Unlock(data.LevelCost);
             game.UnlockPartyMember(this);
         }

@@ -33,7 +33,7 @@ public class EnemyUI : MonoBehaviour
         
     }
 
-    public void EnemyUIInitialize(string _enemyName, int _xpValue, int _coinValue, int level) {
+    public void EnemyUIInitialize(string _enemyName, int _xpValue, int _coinValue, int level, float hpFill) {
         //Generate location where sprite is saved
         string spriteLocation = "enemy/lvl" + level.ToString() + "/" + StringManip.StripWhitespace(_enemyName.ToLower());
 
@@ -42,6 +42,7 @@ public class EnemyUI : MonoBehaviour
         coinValue.text = _coinValue.ToString();
 
         sprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteLocation);
+        ChangeEnemyHPBar(hpFill);
 	}
 
     public void ChangeEnemyHPBar(float fill) {

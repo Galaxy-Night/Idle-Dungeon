@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 /// <summary>
 /// <c>PartyMemberData</c> exists to store the data regarding party members that will need to be
 /// saved between plays.
 /// </summary>
+[Serializable]
 public class PartyMemberData
 {
     public readonly string MemberName;
@@ -19,6 +22,7 @@ public class PartyMemberData
     public int HealCost { get; private set; }
     public bool IsInjured { get; private set; }
     public bool IsDead { get; private set; }
+    public bool IsUnlocked { get; private set; }
 
     private float costMultiplier;
 
@@ -44,8 +48,13 @@ public class PartyMemberData
         HealCost = 0;
         IsInjured = false;
         IsDead = false;
+        IsUnlocked = false;
 	}
 
+    public int Unlock() {
+        IsUnlocked = true;
+        return LevelUp();
+	}
     /// <summary>
     /// Updates the relevant data when a party member is unlocked
     /// </summary>

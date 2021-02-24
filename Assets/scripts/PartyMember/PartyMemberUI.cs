@@ -45,24 +45,31 @@ public class PartyMemberUI : MonoBehaviour
 	/// <c>MonoBehavior</c>, <c>initialize</c> sets the ui data to its initial values
 	/// </summary>
 	/// <param name="_unlockCost">The cost to unlock the character</param>
-	/// <param name="_sprite">The sprite that should be displayed when the character is first
-	/// rendered</param>
 	/// <param name="_name">The name of the character</param>
 	public void initialize(int _unlockCost, string _name) {
-		//generate locations of sprites
-		string activeLocation = "partymembers/" + _name.ToLower();
+		LoadSprites(_name);
+		unlockCost.text = _unlockCost.ToString();
+		sprite.GetComponent<Image>().sprite = locked;
+		memberName.GetComponent<Text>().text = _name;
+	}
+
+	public void InitializeUnlocked(PartyMemberData data) {
+		LoadSprites(data.MemberName);
+		memberName.GetComponent<Text>().text = data.MemberName;
+		sprite.GetComponent<Image>().sprite = active;
+		Unlock(data.LevelCost);
+		LevelUp(data.CurrentLevel, data.LevelCost);
+	}
+
+	private void LoadSprites(string name) {
+		string activeLocation = "partymembers/" + name.ToLower();
 		string lockedLocation = activeLocation + "_blackout";
 		string deadLocation = activeLocation + "_grey";
 
 		active = Resources.Load<Sprite>(activeLocation);
 		locked = Resources.Load<Sprite>(lockedLocation);
 		dead = Resources.Load<Sprite>(deadLocation);
-
-		unlockCost.text = _unlockCost.ToString();
-		sprite.GetComponent<Image>().sprite = locked;
-		memberName.GetComponent<Text>().text = _name;
 	}
-
 	/// <summary>
 	/// <c>onUnlockClick</c> runs when the unlock button is clicked
 	/// </summary>
