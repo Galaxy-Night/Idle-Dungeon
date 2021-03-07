@@ -21,7 +21,7 @@ public class PartyMemberUI : MonoBehaviour
     private GameObject heal;
     
     public void OnUnlockClick(Text currentCoins) {
-        
+        Debug.Log("Unlock Click");
 	}
 
     public void OnLevelClick(Text currentCoins) {
