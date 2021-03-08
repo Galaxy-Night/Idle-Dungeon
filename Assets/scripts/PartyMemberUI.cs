@@ -8,6 +8,8 @@ public class PartyMemberUI : MonoBehaviour
     [SerializeField]
     private GameObject unlockButton;
     [SerializeField]
+    private Text unlockCost;
+    [SerializeField]
     private GameObject levelButton;
     [SerializeField]
     private GameObject currentLevel;
@@ -19,9 +21,20 @@ public class PartyMemberUI : MonoBehaviour
     private GameObject healButton;
     [SerializeField]
     private GameObject heal;
-    
-    public void OnUnlockClick(Text currentCoins) {
+    [SerializeField]
+    private Image image;
+    [SerializeField]
+    private Sprite active;
+    [SerializeField]
+    private Sprite injured;
+
+	private void Start()
+	{
+        unlockCost.text = GetComponent<PartyMemberData>().UnlockCost.ToString();
+	}
+	public void OnUnlockClick(Text currentCoins) {
         Debug.Log("Unlock Click");
+        image.sprite = active;
 	}
 
     public void OnLevelClick(Text currentCoins) {
