@@ -57,4 +57,9 @@ public class Game : MonoBehaviour
     public void LoadEnemy() {
         Instantiate(Resources.Load("enemyprefabs/animated-shrub"), enemyUIParent);
 	}
+
+    public void UnlockPartyMember(PartyMemberData memberData) {
+        data.UnlockPartyMember(memberData);
+        currentCoins.text = data.currentCoins.ToString();
+	}
 }

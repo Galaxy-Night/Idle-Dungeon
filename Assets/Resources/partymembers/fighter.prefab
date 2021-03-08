@@ -121,10 +121,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4237874504562881926}
         m_MethodName: OnLevelClick
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -325,10 +325,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4237874504562881926}
         m_MethodName: OnUnlockClick
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -497,6 +497,7 @@ MonoBehaviour:
   startingHealth: 100
   MaxHealth: 100
   Damage: 1
+  CostMultiplier: 1.1
 --- !u!1 &3828292661668654831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,10 +1001,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4237874504562881926}
         m_MethodName: OnHealClick
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

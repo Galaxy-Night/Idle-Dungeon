@@ -36,4 +36,8 @@ public class GameData
         returned.Add(new Tuple<int, string>(1000, "wizard"));
         return returned;
     }
+
+    public void UnlockPartyMember(PartyMemberData memberData) {
+        currentCoins -= memberData.UnlockCost;
+    }
 }
