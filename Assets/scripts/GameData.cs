@@ -10,6 +10,7 @@ public class GameData
     public int xp { get; private set; }
     public int currentFloor { get; private set; }
     public List<Tuple<int, string>> charactersToUnlock;
+    public List<PartyMemberData> unlockedPartyMembers;
 
     public GameData() {
         tapDamage = 1;
@@ -17,6 +18,7 @@ public class GameData
         xp = 0;
         currentCoins = 0;
         charactersToUnlock = generateUnlockCosts();
+        unlockedPartyMembers = new List<PartyMemberData>();
     }
 
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
@@ -39,5 +41,6 @@ public class GameData
 
     public void UnlockPartyMember(PartyMemberData memberData) {
         currentCoins -= memberData.UnlockCost;
+        unlockedPartyMembers.Add(memberData);
     }
 }

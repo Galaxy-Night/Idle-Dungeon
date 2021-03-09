@@ -20,6 +20,8 @@ public class Game : MonoBehaviour
     [SerializeField]
     private Transform partyMemberUIParent;
 
+    private EnemyUI currentEnemy;
+
     private int partyMemberYOffset;
     private int partyMemberY;
 
@@ -30,6 +32,8 @@ public class Game : MonoBehaviour
         LoadEnemy();
         partyMemberYOffset = -133;
         partyMemberY = partyMemberYOffset * -1;
+
+        InvokeRepeating("DealAllPlayerAutoDamage", 1f, 1f);
     }
 
     // Update is called once per frame
@@ -55,11 +59,23 @@ public class Game : MonoBehaviour
 	}
 
     public void LoadEnemy() {
-        Instantiate(Resources.Load("enemyprefabs/animated-shrub"), enemyUIParent);
+        GameObject temp = (GameObject)Instantiate(Resources.Load("enemyprefabs/animated-shrub"), enemyUIParent);
+        currentEnemy = temp.GetComponent<EnemyUI>();
 	}
 
     public void UnlockPartyMember(PartyMemberData memberData) {
         data.UnlockPartyMember(memberData);
         currentCoins.text = data.currentCoins.ToString();
+	}
+
+    private void DealAllPlayerAutoDamage() {
+        if (data.unlockedPartyMembers.Count != 0) {
+            foreach (PartyMemberData member in data.unlockedPartyMembers)
+                DealPlayerAutoDamage(member);
+		}
+	}
+
+    private void DealPlayerAutoDamage(PartyMemberData data) {
+        currentEnemy.TakeDamage(data.Damage);
 	}
 }
