@@ -480,6 +480,7 @@ MonoBehaviour:
   image: {fileID: 2715363509686667573}
   active: {fileID: 21300000, guid: 9a21abfa56c685240af319aed57fedab, type: 3}
   injured: {fileID: 21300000, guid: 4ff48ad70f346f24ab909bc10cbf3d1b, type: 3}
+  hpBar: {fileID: 7155451113206049087}
 --- !u!114 &2449414186927843145
 MonoBehaviour:
   m_ObjectHideFlags: 0

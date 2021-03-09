@@ -15,7 +15,7 @@ public class EnemyUI : MonoBehaviour
 	private Text xpDrop;
 
 	private Game gameHandler;
-	private EnemyData data;
+	public EnemyData data { get; private set; }
 
 	void Start()
 	{

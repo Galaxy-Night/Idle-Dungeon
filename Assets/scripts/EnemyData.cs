@@ -8,6 +8,7 @@ public class EnemyData : MonoBehaviour
     public int currentHealth;
     public int coinDrop;
     public int xpDrop;
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
