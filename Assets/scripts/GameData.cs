@@ -4,6 +4,7 @@ using System;
 
 public class GameData
 {
+    public readonly int MAX_LEVEL = 4;
     public readonly int[] XP_TO_LEVEL = { 300, 600, 1800, 3600, 7200 };
     public int tapDamage { get; private set; }
     public int currentCoins { get; private set; }
@@ -52,5 +53,10 @@ public class GameData
 
     public void LevelUpPartyMember(int cost) {
         currentCoins -= cost;
+	}
+
+    public void LevelUp() {
+        xp -= XP_TO_LEVEL[currentFloor - 1];
+        currentFloor++;
 	}
 }

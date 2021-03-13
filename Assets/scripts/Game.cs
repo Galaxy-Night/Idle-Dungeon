@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -23,6 +25,8 @@ public class Game : MonoBehaviour
 
     private EnemyUI currentEnemy;
 
+    List<List<GameObject>> validEnemies;
+
     private int partyMemberYOffset;
     private int partyMemberY;
 
@@ -30,9 +34,14 @@ public class Game : MonoBehaviour
     void Start()
     {
         data = new GameData();
-        LoadEnemy();
         partyMemberYOffset = -133;
         partyMemberY = partyMemberYOffset * -1;
+        validEnemies = new List<List<GameObject>>();
+
+        LoadLevelEnemies(0);
+        LoadLevelEnemies(1);
+        LoadLevelEnemies(2);
+        LoadEnemy();
 
         InvokeRepeating("DealAllPlayerAutoDamage", 1f, 1f);
         InvokeRepeating("DealEnemyAutoDamage", 1f, 1f);
@@ -67,11 +76,20 @@ public class Game : MonoBehaviour
                 data.charactersToUnlock.RemoveAt(0);
             }
         }
+        if (data.currentFloor < data.MAX_LEVEL)
+        {
+            if (data.xp >= data.XP_TO_LEVEL[data.currentFloor - 1]) {
+                LevelUp();
+			}
+		}
         LoadEnemy();
 	}
 
     public void LoadEnemy() {
-        GameObject temp = (GameObject)Instantiate(Resources.Load("enemyprefabs/animated-shrub"), enemyUIParent);
+        int floor = Random.Range(0, validEnemies.Count);
+        Debug.Log(floor);
+        int enemy = Random.Range(0, validEnemies[floor].Count - 1);
+        GameObject temp = (GameObject)Instantiate(validEnemies[floor][enemy], enemyUIParent);
         currentEnemy = temp.GetComponent<EnemyUI>();
 	}
 
@@ -123,5 +141,20 @@ public class Game : MonoBehaviour
     public void LevelUpPartyMember(PartyMemberData memberData) {
         data.LevelUpPartyMember(memberData.LevelCost);
         currentCoins.text = data.currentCoins.ToString();
+    }
+
+    private void LoadLevelEnemies(int level) {
+        List<GameObject> added = new List<GameObject>();
+        GameObject[] loaded = Resources.LoadAll<GameObject>("enemyprefabs/lvl" + level.ToString());
+        foreach (GameObject item in loaded)
+            added.Add(item);
+        validEnemies.Add(added);
+	}
+
+    private void LevelUp() {
+        data.LevelUp();
+        validEnemies.RemoveAt(0);
+        LoadLevelEnemies(data.currentFloor + 1);
+        xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
     }
 }
