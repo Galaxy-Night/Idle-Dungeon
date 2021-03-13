@@ -44,6 +44,16 @@ public class Game : MonoBehaviour
         
     }
 
+    public void Pause() {
+        CancelInvoke("DealAllPlayerAutoDamage");
+        CancelInvoke("DealEnemyAutoDamage");
+	}
+
+    public void Unpause() {
+        InvokeRepeating("DealAllPlayerAutoDamage", 1f, 1f);
+        InvokeRepeating("DealEnemyAutoDamage", 1f, 1f);
+    }
+        
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
         data.HandleEnemyDeath(coinDrop, xpDrop);
         currentCoins.text = data.currentCoins.ToString();
