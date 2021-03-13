@@ -9,6 +9,7 @@ public class GameData
     public int currentCoins { get; private set; }
     public int xp { get; private set; }
     public int currentFloor { get; private set; }
+    public int totalMaxHealth { get; private set; }
     public List<Tuple<int, string>> charactersToUnlock;
     public List<PartyMemberData> unlockedPartyMembers;
 
@@ -17,6 +18,7 @@ public class GameData
         currentFloor = 1;
         xp = 0;
         currentCoins = 0;
+        totalMaxHealth = 0;
         charactersToUnlock = generateUnlockCosts();
         unlockedPartyMembers = new List<PartyMemberData>();
     }

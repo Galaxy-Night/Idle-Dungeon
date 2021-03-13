@@ -86,6 +86,8 @@ public class Game : MonoBehaviour
         if (data.unlockedPartyMembers.Count != 0)
         {
             int totalMaxHealth = 0;
+            int totalCurrentHealth = 0;
+
             foreach (PartyMemberData member in data.unlockedPartyMembers)
                 totalMaxHealth += member.MaxHealth;
             foreach (PartyMemberData member in data.unlockedPartyMembers)
@@ -93,7 +95,10 @@ public class Game : MonoBehaviour
                 float fractionDamageTaken = (float)member.MaxHealth / totalMaxHealth;
                 if (currentEnemy != null)
                     member.TakeDamage(Mathf.CeilToInt(fractionDamageTaken * currentEnemy.data.damage));
+                totalCurrentHealth += member.CurrentHealth;
             }
+
+            hpBar.fillAmount = (float)totalCurrentHealth / totalMaxHealth;
         }
     }
 
