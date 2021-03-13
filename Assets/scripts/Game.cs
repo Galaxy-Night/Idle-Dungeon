@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -97,7 +98,9 @@ public class Game : MonoBehaviour
                     member.TakeDamage(Mathf.CeilToInt(fractionDamageTaken * currentEnemy.data.damage));
                 totalCurrentHealth += member.CurrentHealth;
             }
-
+            if (totalCurrentHealth == 0) {
+                SceneManager.LoadScene("LeaveDungeon");
+			}
             hpBar.fillAmount = (float)totalCurrentHealth / totalMaxHealth;
         }
     }
