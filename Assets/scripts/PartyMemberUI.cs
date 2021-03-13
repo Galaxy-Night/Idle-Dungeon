@@ -50,8 +50,14 @@ public class PartyMemberUI : MonoBehaviour
 	}
 
     public void OnLevelClick() {
-
-	}
+        Debug.Log("Click");
+        if (GameObject.Find("game_handler").GetComponent<Game>().data.currentCoins >= GetComponent<PartyMemberData>().LevelCost)
+        {
+            GameObject.Find("game_handler").GetComponent<Game>().LevelUpPartyMember(GetComponent<PartyMemberData>());
+            data.LevelUp();
+            LevelUp();
+        }
+    }
 
     public void OnHealClick()
     {

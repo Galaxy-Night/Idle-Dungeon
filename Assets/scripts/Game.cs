@@ -119,4 +119,9 @@ public class Game : MonoBehaviour
         data.HealRevivePartyMember(memberData.HealCost);
         currentCoins.text = data.currentCoins.ToString();
     }
+
+    public void LevelUpPartyMember(PartyMemberData memberData) {
+        data.LevelUpPartyMember(memberData.LevelCost);
+        currentCoins.text = data.currentCoins.ToString();
+    }
 }

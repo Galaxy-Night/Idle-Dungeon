@@ -49,4 +49,8 @@ public class GameData
     public void HealRevivePartyMember(int cost) {
         currentCoins -= cost;
 	}
+
+    public void LevelUpPartyMember(int cost) {
+        currentCoins -= cost;
+	}
 }
