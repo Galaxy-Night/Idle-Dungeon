@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Xml;
+using System.Xml.Serialization;
 
+[Serializable]
 public class GameData
 {
     public readonly int MAX_LEVEL = 4;
@@ -11,7 +14,9 @@ public class GameData
     public int xp { get; private set; }
     public int currentFloor { get; private set; }
     public int totalMaxHealth { get; private set; }
-    public List<Tuple<int, string>> charactersToUnlock;
+
+    public int visibleMembers;
+
     public List<PartyMemberData> unlockedPartyMembers;
 
     public GameData() {
@@ -20,8 +25,8 @@ public class GameData
         xp = 0;
         currentCoins = 0;
         totalMaxHealth = 0;
-        charactersToUnlock = generateUnlockCosts();
         unlockedPartyMembers = new List<PartyMemberData>();
+        visibleMembers = 0;
     }
 
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
@@ -32,15 +37,6 @@ public class GameData
     private void LoadEnemy() {
           
 	}
-
-    private List<Tuple<int, string>> generateUnlockCosts() {
-        List<Tuple<int, string>> returned = new List<Tuple<int, string>>();
-        returned.Add(new Tuple<int, string>(10, "fighter"));
-        /*returned.Add(new Tuple<int, string>(100, "archer"));
-        returned.Add(new Tuple<int, string>(500, "cleric"));
-        returned.Add(new Tuple<int, string>(1000, "wizard"));*/
-        return returned;
-    }
 
     public void UnlockPartyMember(PartyMemberData memberData) {
         currentCoins -= memberData.UnlockCost;

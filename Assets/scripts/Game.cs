@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using System;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +30,8 @@ public class Game : MonoBehaviour
 
     List<List<GameObject>> validEnemies;
 
+    public List<Tuple<int, string>> charactersToUnlock;
+
     private int partyMemberYOffset;
     private int partyMemberY;
 
@@ -37,6 +42,7 @@ public class Game : MonoBehaviour
         partyMemberYOffset = -133;
         partyMemberY = partyMemberYOffset * -1;
         validEnemies = new List<List<GameObject>>();
+        charactersToUnlock = generateUnlockCosts();
 
         LoadLevelEnemies(0);
         LoadLevelEnemies(1);
@@ -53,7 +59,14 @@ public class Game : MonoBehaviour
         
     }
 
-    public void Pause() {
+	private void OnApplicationQuit()
+	{
+        Save();
+        Debug.Log("Quit Complete");
+        Debug.Log(Application.persistentDataPath);
+	}
+
+	public void Pause() {
         CancelInvoke("DealAllPlayerAutoDamage");
         CancelInvoke("DealEnemyAutoDamage");
 	}
@@ -62,18 +75,29 @@ public class Game : MonoBehaviour
         InvokeRepeating("DealAllPlayerAutoDamage", 1f, 1f);
         InvokeRepeating("DealEnemyAutoDamage", 1f, 1f);
     }
-        
+
+    private List<Tuple<int, string>> generateUnlockCosts()
+    {
+        List<Tuple<int, string>> returned = new List<Tuple<int, string>>();
+        returned.Add(new Tuple<int, string>(10, "fighter"));
+        /*returned.Add(new Tuple<int, string>(100, "archer"));
+        returned.Add(new Tuple<int, string>(500, "cleric"));
+        returned.Add(new Tuple<int, string>(1000, "wizard"));*/
+        return returned;
+    }
+
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
         data.HandleEnemyDeath(coinDrop, xpDrop);
         currentCoins.text = data.currentCoins.ToString();
         xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
-        if (data.charactersToUnlock.Count > 0) {
-            if (data.charactersToUnlock[0].Item1 / 2 <= data.currentCoins)
+        if (charactersToUnlock.Count > 0) {
+            if (charactersToUnlock[0].Item1 / 2 <= data.currentCoins)
             {
-                GameObject newMember = (GameObject)Instantiate(Resources.Load("partymembers/" + data.charactersToUnlock[0].Item2), partyMemberUIParent);
+                GameObject newMember = (GameObject)Instantiate(Resources.Load("partymembers/" + charactersToUnlock[0].Item2), partyMemberUIParent);
                 newMember.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, partyMemberY, 0);
                 partyMemberY += partyMemberYOffset;
-                data.charactersToUnlock.RemoveAt(0);
+                charactersToUnlock.RemoveAt(0);
+                data.visibleMembers++;
             }
         }
         if (data.currentFloor < data.MAX_LEVEL)
@@ -86,9 +110,9 @@ public class Game : MonoBehaviour
 	}
 
     public void LoadEnemy() {
-        int floor = Random.Range(0, validEnemies.Count);
+        int floor = UnityEngine.Random.Range(0, validEnemies.Count);
         Debug.Log(floor);
-        int enemy = Random.Range(0, validEnemies[floor].Count - 1);
+        int enemy = UnityEngine.Random.Range(0, validEnemies[floor].Count - 1);
         GameObject temp = (GameObject)Instantiate(validEnemies[floor][enemy], enemyUIParent);
         currentEnemy = temp.GetComponent<EnemyUI>();
 	}
@@ -157,4 +181,17 @@ public class Game : MonoBehaviour
         LoadLevelEnemies(data.currentFloor + 1);
         xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
     }
+
+    private void Save() {
+        SaveData save = new SaveData();
+        FileStream file = File.Create(Application.persistentDataPath + "/dungeonstate.save");
+        XmlSerializer serializer = new XmlSerializer(typeof(SaveData));
+
+        save.init(data, currentEnemy, data.unlockedPartyMembers);
+
+        serializer.Serialize(file, save);
+        file.Close();
+
+        Debug.Log("Save Complete");
+	}
 }
