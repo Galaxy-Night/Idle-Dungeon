@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,5 +27,11 @@ public class MenuUI : MonoBehaviour
 
 	public void OnLeaveClick() {
 		SceneManager.LoadScene("LeaveDungeon");
+	}
+
+	public void OnClearClick() {
+		if (File.Exists(Application.persistentDataPath + "/dungeonstate.save"))
+			File.Delete(Application.persistentDataPath + "/dungeonstate.save");
+		SceneManager.LoadScene("Main");
 	}
 }
