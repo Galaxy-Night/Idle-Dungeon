@@ -17,10 +17,16 @@ public class EnemyUI : MonoBehaviour
 	private Game gameHandler;
 	public EnemyData data { get; private set; }
 
+	private bool isInitialized = false;
+
 	void Start()
 	{
-		gameHandler = GameObject.Find("game_handler").GetComponent<Game>();
-		data = GetComponent<EnemyData>();
+		if (!isInitialized) {
+			gameHandler = GameObject.Find("game_handler").GetComponent<Game>();
+			data = GetComponent<EnemyData>();
+			data.currentHealth = data.MAX_HEALTH;
+		}
+
 		coinDrop.text = data.coinDrop.ToString();
 		xpDrop.text = data.xpDrop.ToString();
 	}
@@ -39,5 +45,21 @@ public class EnemyUI : MonoBehaviour
 		enemyHP.fillAmount = (float)GetComponent<EnemyData>().currentHealth / GetComponent<EnemyData>().MAX_HEALTH;
 		if (data.currentHealth <= 0)
 			HandleDeath(GetComponent<EnemyData>(), gameHandler.GetComponent<Game>());
+	}
+
+	public void ApplyData (EnemySave save) {
+		data = GetComponent<EnemyData>();
+		gameHandler = GameObject.Find("game_handler").GetComponent<Game>();
+
+		data.MAX_HEALTH = save.maxHealth;
+		data.currentHealth = save.currentHealth;
+		data.coinDrop = save.coinDrop;
+		data.xpDrop = save.xpDrop;
+		data.damage = save.damage;
+		data.level = save.level;
+
+		enemyHP.fillAmount = (float)GetComponent<EnemyData>().currentHealth / GetComponent<EnemyData>().MAX_HEALTH;
+
+		isInitialized = true;
 	}
 }

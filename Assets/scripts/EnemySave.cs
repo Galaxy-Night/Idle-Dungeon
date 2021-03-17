@@ -6,6 +6,7 @@
 	public int coinDrop;
 	public int xpDrop;
 	public int damage;
+	public int level;
 
 	static public EnemySave init(EnemyUI enemy) {
 		EnemySave returned = new EnemySave();
@@ -15,6 +16,7 @@
 		returned.coinDrop = enemy.data.coinDrop;
 		returned.xpDrop = enemy.data.xpDrop;
 		returned.damage = enemy.data.damage;
+		returned.level = enemy.data.level;
 		return returned;
 	}
 }

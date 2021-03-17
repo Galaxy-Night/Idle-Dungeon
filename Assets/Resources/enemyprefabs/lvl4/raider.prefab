@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6220258577926671262
+--- !u!1001 &7192511319769603542
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,27 +11,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 2a764aa833d9e3940ba14dbaa120cf2f,
+      objectReference: {fileID: 21300000, guid: dc7a4698ed9a35a4cab037d7c5b30697,
         type: 3}
     - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
         type: 3}
       propertyPath: MAX_HEALTH
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
-        type: 3}
-      propertyPath: coinDrop
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
-        type: 3}
-      propertyPath: xpDrop
-      value: 300
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
         type: 3}
       propertyPath: damage
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
+        type: 3}
+      propertyPath: coinDrop
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
+        type: 3}
+      propertyPath: xpDrop
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008287462977610290, guid: ee5ff63f0ddcd0646a12d7188adc0647,
+        type: 3}
+      propertyPath: level
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1008287462977610292, guid: ee5ff63f0ddcd0646a12d7188adc0647,
         type: 3}
@@ -141,12 +146,12 @@ PrefabInstance:
     - target: {fileID: 1008287462977610295, guid: ee5ff63f0ddcd0646a12d7188adc0647,
         type: 3}
       propertyPath: m_Name
-      value: golem
+      value: raider Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4121984853013374395, guid: ee5ff63f0ddcd0646a12d7188adc0647,
         type: 3}
       propertyPath: m_Text
-      value: Golem
+      value: Raider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5ff63f0ddcd0646a12d7188adc0647, type: 3}

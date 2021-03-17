@@ -623,3 +623,4 @@ MonoBehaviour:
   coinDrop: 70
   xpDrop: 100
   damage: 40
+  level: 2

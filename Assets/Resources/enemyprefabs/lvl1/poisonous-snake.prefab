@@ -151,6 +151,7 @@ MonoBehaviour:
   coinDrop: 20
   xpDrop: 50
   damage: 20
+  level: 1
 --- !u!1 &3658726204022419445
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,21 +31,26 @@ public class PartyMemberUI : MonoBehaviour
     private Image hpBar;
 
     PartyMemberData data;
+
+    private bool isInitialized = false;
 	private void Start()
 	{
-        data = GetComponent<PartyMemberData>();
+        if (!isInitialized) {
+            data = GetComponent<PartyMemberData>();
+        }
         unlockCost.text = GetComponent<PartyMemberData>().UnlockCost.ToString();
-	}
+    }
+
+    public void Initialize(PartyMemberSave save) {
+        data = GetComponent<PartyMemberData>();
+        data.Initialize(save);
+        UIUnlock();
+    }
 	public void OnUnlockClick() {
         if (GameObject.Find("game_handler").GetComponent<Game>().data.currentCoins >= GetComponent<PartyMemberData>().UnlockCost) {
             GameObject.Find("game_handler").GetComponent<Game>().UnlockPartyMember(GetComponent<PartyMemberData>());
             GetComponent<PartyMemberData>().Unlock();
-            Destroy(unlockButton);
-            levelButton.SetActive(true);
-            levelCost.SetActive(true);
-            currentLevel.SetActive(true);
-            image.sprite = active;
-            LevelUp();
+            UIUnlock();
         }
 	}
 
@@ -98,4 +103,13 @@ public class PartyMemberUI : MonoBehaviour
         image.sprite = injured;
         Injure();
 	}
+
+    public void UIUnlock() {
+        Destroy(unlockButton);
+        levelButton.SetActive(true);
+        levelCost.SetActive(true);
+        currentLevel.SetActive(true);
+        image.sprite = active;
+        LevelUp();
+    }
 }

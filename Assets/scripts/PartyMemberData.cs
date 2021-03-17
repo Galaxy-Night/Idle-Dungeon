@@ -17,16 +17,20 @@ public class PartyMemberData : MonoBehaviour
     public bool IsInjured { get; private set; }
     public int HealCost { get; private set; }
     public bool IsDead { get; private set; }
+
+    private bool isDataInitialized = false;
     /*public bool IsUnlocked { get; private set; }*/
 
     // Start is called before the first frame update
     void Start()
     {
-        CurrentLevel = 0;
-        CurrentHealth = MaxHealth;
-        Damage = StartingDamage;
-        IsInjured = false;
-        IsDead = false;
+        if (!isDataInitialized) {
+            CurrentLevel = 0;
+            CurrentHealth = MaxHealth;
+            Damage = StartingDamage;
+            IsInjured = false;
+            IsDead = false;
+        }
     }
 
     // Update is called once per frame
@@ -34,6 +38,14 @@ public class PartyMemberData : MonoBehaviour
     {
         
     }
+
+    public void Initialize(PartyMemberSave save) {
+        CurrentLevel = save.CurrentLevel;
+        CurrentHealth = save.MaxHealth;
+        Damage = save.Damage;
+        LevelCost = save.LevelCost;
+        HealCost = save.HealCost;
+	}
 
     public void Unlock() {
         CurrentLevel++;

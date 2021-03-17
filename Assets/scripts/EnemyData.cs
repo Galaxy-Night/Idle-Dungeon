@@ -9,11 +9,12 @@ public class EnemyData : MonoBehaviour
     public int coinDrop;
     public int xpDrop;
     public int damage;
+    public int level;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = MAX_HEALTH;   
+
     }
 
     // Update is called once per frame

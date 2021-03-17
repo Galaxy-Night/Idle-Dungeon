@@ -44,10 +44,18 @@ public class Game : MonoBehaviour
         validEnemies = new List<List<GameObject>>();
         charactersToUnlock = generateUnlockCosts();
 
-        LoadLevelEnemies(0);
-        LoadLevelEnemies(1);
-        LoadLevelEnemies(2);
-        LoadEnemy();
+        if (GameObject.Find("load-handler")) {
+            Load();
+		}
+
+        LoadLevelEnemies(data.currentFloor - 1);
+        LoadLevelEnemies(data.currentFloor);
+        LoadLevelEnemies(data.currentFloor + 1);
+
+        if (!GameObject.Find("load-handler"))
+        {
+            LoadEnemy();
+        }
 
         InvokeRepeating("DealAllPlayerAutoDamage", 1f, 1f);
         InvokeRepeating("DealEnemyAutoDamage", 1f, 1f);
@@ -194,4 +202,27 @@ public class Game : MonoBehaviour
 
         Debug.Log("Save Complete");
 	}
+
+    private void Load() {
+        SaveData save = GameObject.Find("load-handler").GetComponent<Load>().saveData;
+
+        GameObject temp = (GameObject)Instantiate(Resources.Load("enemyprefabs/lvl" + save.currentEnemy.level.ToString() + "/" + save.currentEnemy.name), enemyUIParent);
+        currentEnemy = temp.GetComponent<EnemyUI>();
+        currentEnemy.ApplyData(save.currentEnemy);
+
+        if(save.partyMembers.Count > 0) {
+            foreach (PartyMemberSave saveData in save.partyMembers) {
+                GameObject newMember = (GameObject)Instantiate(Resources.Load("partymembers/" + saveData.name), partyMemberUIParent);
+                newMember.GetComponent<PartyMemberUI>().Initialize(saveData);
+                data.unlockedPartyMembers.Add(newMember.GetComponent<PartyMemberData>());
+            }
+		}
+
+        data.Initialize(save);
+        UIInitialize();
+    }
+    private void UIInitialize() {
+        currentCoins.text = data.currentCoins.ToString();
+        xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
+    }
 }

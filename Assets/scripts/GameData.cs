@@ -55,4 +55,12 @@ public class GameData
         xp -= XP_TO_LEVEL[currentFloor - 1];
         currentFloor++;
 	}
+
+    public void Initialize(SaveData data) {
+        tapDamage = data.tapDamage;
+        currentCoins = data.currentCoins;
+        xp = data.xp;
+        currentFloor = data.currentFloor;
+        visibleMembers = data.visibleMembers;
+    }
 }
