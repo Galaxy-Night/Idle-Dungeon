@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum UpgradeType {
+	Fighter,
+	Archer,
+	Wizard,
+	Cleric,
+	Tap,
+	Coins,
+	XP,
+	Cost
+}
 public class Upgrade : MonoBehaviour
 {
+	public static readonly int OFFSET = 100;
+
 	[SerializeField]
 	protected int cost;
 	[SerializeField]
 	protected int multiplier;
 	[SerializeField]
 	protected string description;
+	[SerializeField]
+	protected UpgradeType upgradeType;
 	[SerializeField]
 	private GameObject descriptionBox;
 	[SerializeField]

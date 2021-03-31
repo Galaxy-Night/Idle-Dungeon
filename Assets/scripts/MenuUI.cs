@@ -13,6 +13,8 @@ public class MenuUI : MonoBehaviour
 	private GameObject open;
 	[SerializeField]
 	private GameObject gameHandler;
+	[SerializeField]
+	private GameObject upgrades;
 	public void OnOpenClick() {
 		menu.SetActive(true);
 		open.SetActive(false);
@@ -21,6 +23,7 @@ public class MenuUI : MonoBehaviour
 
 	public void OnCloseClick() {
 		menu.SetActive(false);
+		upgrades.SetActive(false);
 		open.SetActive(true);
 		gameHandler.GetComponent<Game>().Unpause();
 	}
@@ -33,5 +36,10 @@ public class MenuUI : MonoBehaviour
 		if (File.Exists(Application.persistentDataPath + "/dungeonstate.save"))
 			File.Delete(Application.persistentDataPath + "/dungeonstate.save");
 		SceneManager.LoadScene("Main");
+	}
+
+	public void OnUpgradeClick() {
+		menu.SetActive(false);
+		upgrades.SetActive(true);
 	}
 }
