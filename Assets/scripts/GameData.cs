@@ -17,6 +17,9 @@ public class GameData
 
     public int visibleMembers;
 
+    public float xpMultiplier { get; private set; }
+    public float coinMultiplier { get; private set; }
+
     public List<PartyMemberData> unlockedPartyMembers;
 
     public GameData() {
@@ -27,6 +30,8 @@ public class GameData
         totalMaxHealth = 0;
         unlockedPartyMembers = new List<PartyMemberData>();
         visibleMembers = 0;
+        xpMultiplier = 1;
+        coinMultiplier = 1;
     }
 
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
@@ -63,4 +68,16 @@ public class GameData
         currentFloor = data.currentFloor;
         visibleMembers = data.visibleMembers;
     }
+
+    public void UpgradeTap(float multiplier) {
+        tapDamage = (int)(tapDamage * multiplier);
+	}
+
+    public void UpgradeXp(float multiplier) {
+        xpMultiplier *= multiplier;
+	}
+
+    public void UpgradeCoin(float multiplier) {
+        coinMultiplier *= multiplier;
+	}
 }

@@ -95,7 +95,7 @@ public class Game : MonoBehaviour
     }
 
     public void HandleEnemyDeath(int coinDrop, int xpDrop) {
-        data.HandleEnemyDeath(coinDrop, xpDrop);
+        data.HandleEnemyDeath((int)(coinDrop * data.coinMultiplier), (int)(xpDrop * data.xpMultiplier));
         currentCoins.text = data.currentCoins.ToString();
         xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
         if (charactersToUnlock.Count > 0) {
