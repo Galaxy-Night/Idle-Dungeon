@@ -88,9 +88,9 @@ public class Game : MonoBehaviour
     {
         List<Tuple<int, string>> returned = new List<Tuple<int, string>>();
         returned.Add(new Tuple<int, string>(10, "fighter"));
-        returned.Add(new Tuple<int, string>(100, "archer"));
+        /*returned.Add(new Tuple<int, string>(100, "archer"));
         returned.Add(new Tuple<int, string>(500, "wizard"));
-        returned.Add(new Tuple<int, string>(1000, "cleric"));
+        returned.Add(new Tuple<int, string>(1000, "cleric"));*/
         return returned;
     }
 
