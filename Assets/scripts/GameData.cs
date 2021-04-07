@@ -69,15 +69,18 @@ public class GameData
         visibleMembers = data.visibleMembers;
     }
 
-    public void UpgradeTap(float multiplier) {
+    public void UpgradeTap(float multiplier, int cost) {
         tapDamage = (int)(tapDamage * multiplier);
+        currentCoins -= cost;
 	}
 
-    public void UpgradeXp(float multiplier) {
+    public void UpgradeXp(float multiplier, int cost) {
         xpMultiplier *= multiplier;
-	}
+        currentCoins -= cost;
+    }
 
-    public void UpgradeCoin(float multiplier) {
+    public void UpgradeCoin(float multiplier, int cost) {
         coinMultiplier *= multiplier;
+        currentCoins -= cost;
 	}
 }

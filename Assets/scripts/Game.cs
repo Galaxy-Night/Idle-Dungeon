@@ -225,4 +225,8 @@ public class Game : MonoBehaviour
         currentCoins.text = data.currentCoins.ToString();
         xpBar.fillAmount = (float)data.xp / data.XP_TO_LEVEL[data.currentFloor - 1];
     }
+
+    public void UpdateCurrentCoins() {
+        currentCoins.text = data.currentCoins.ToString();
+    }
 }

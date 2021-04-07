@@ -18,13 +18,14 @@ public class UpgradeXP : UpgradeBase
         if (checkCoins())
         {
             Game handler = GameObject.Find("game_handler").GetComponent<Game>();
-            handler.data.UpgradeXp(multiplier);
+            handler.data.UpgradeXp(multiplier, cost);
+            handler.UpdateCurrentCoins();
             NextTier();
             OnBackClick();
         }
     }
     protected override void UpdateDescription()
     {
-        description = $"Multiplies xp earned by {multiplier}";
+        description = $"Earn {multiplier} times more xp!";
     }
 }

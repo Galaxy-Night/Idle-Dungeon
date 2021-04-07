@@ -18,7 +18,8 @@ public class UpgradeTap : UpgradeBase
         if (checkCoins())
         {
             Game handler = GameObject.Find("game_handler").GetComponent<Game>();
-            handler.data.UpgradeTap(multiplier);
+            handler.data.UpgradeTap(multiplier, cost);
+            handler.UpdateCurrentCoins();
             NextTier();
             OnBackClick();
         }
