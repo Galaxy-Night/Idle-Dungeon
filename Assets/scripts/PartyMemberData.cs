@@ -88,4 +88,12 @@ public class PartyMemberData : MonoBehaviour
         IsDead = false;
         HealCost = 0;
 	}
+
+    public void Upgrade(float multiplier) {
+        startingHealth = (int)(startingHealth * multiplier);
+        StartingDamage = (int)(StartingDamage * multiplier);
+        MaxHealth = (int)(MaxHealth * multiplier);
+        Damage = (int)(Damage * multiplier);
+        CurrentHealth = (int)(CurrentHealth * multiplier);
+    }
 }

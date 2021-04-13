@@ -83,4 +83,8 @@ public class GameData
         coinMultiplier *= multiplier;
         currentCoins -= cost;
 	}
+
+    public void UpgradePartyMember(int cost) {
+        currentCoins -= cost;
+    }
 }
