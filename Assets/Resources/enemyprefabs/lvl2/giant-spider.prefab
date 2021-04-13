@@ -424,11 +424,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e8b3bd7bf2f5a4ba5095c344aa7c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_HEALTH: 30
+  MAX_HEALTH: 90
   currentHealth: 0
   coinDrop: 50
   xpDrop: 125
-  damage: 25
+  damage: 12
   level: 2
 --- !u!1 &3859193402442864296
 GameObject:

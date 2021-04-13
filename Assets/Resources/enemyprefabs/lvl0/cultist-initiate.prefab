@@ -150,7 +150,8 @@ MonoBehaviour:
   currentHealth: 0
   coinDrop: 40
   xpDrop: 75
-  damage: 10
+  damage: 1
+  level: 0
 --- !u!1 &4560264349047362920
 GameObject:
   m_ObjectHideFlags: 0
